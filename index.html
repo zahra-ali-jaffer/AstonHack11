@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Garden - Turn Daily Choices Into a Thriving Garden</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+             --primary-green: #478778;   /* Lincoln Green */
+            --light-green: #AFE1AF;     
+            --accent-green: #AFE1AF;    
+            --soft-green: #AFE1AF;      
+            --dark-green: #097969;      /* Cadmium Green */
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('hackathon.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+            color: var(--primary-green);
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-green);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .sign-in-btn {
+            background-color: transparent;
+            border: 2px solid var(--primary-green);
+            color: var(--primary-green);
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .sign-in-btn:hover {
+            background-color: var(--primary-green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 22px;
+            color: var(--dark-green);
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        
+        .hero-description {
+            font-size: 18px;
+            margin-bottom: 40px;
+            color: #555;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+        
+        .primary-btn {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 16px 35px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+        }
+        
+        .primary-btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+        }
+        
+        .visual-preview {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .plants-display {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 180px;
+            gap: 50px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .plant {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .plant-img {
+            font-size: 60px;
+            margin-bottom: 10px;
+            transition: transform 0.5s ease;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.2));
+        }
+        
+        .plant-small {
+            color: var(--light-green);
+            font-size: 50px;
+        }
+        
+        .plant-medium {
+            color: var(--primary-green);
+            font-size: 70px;
+        }
+        
+        .plant-large {
+            color: var(--dark-green);
+            font-size: 90px;
+        }
+        
+        .plant-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: 500;
+        }
+        
+        .progress-container {
+            width: 80%;
+            margin: 30px auto 0;
+            background-color: #e0e0e0;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 65%;
+            background: linear-gradient(to right, var(--light-green), var(--primary-green));
+            border-radius: 6px;
+            transition: width 2s ease;
+            position: relative;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+            border-radius: 6px;
+        }
+        
+        /* Content Sections */
+        .section {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .section-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 32px;
+            color: var(--dark-green);
+            margin-bottom: 30px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .step-cards {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .step-card {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-green);
+            color: white;
+            border-radius: 50%;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .step-card h3 {
+            font-size: 20px;
+            color: var(--dark-green);
+            margin-bottom: 10px;
+        }
+        
+        .micro-copy {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            font-size: 16px;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--soft-green);
+            border-radius: 10px;
+        }
+        
+        /* Compact Feature Grid - All in One Line */
+        .compact-feature-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .compact-feature-card {
+            flex: 1;
+            min-width: 220px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .compact-feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .compact-feature-icon {
+            font-size: 28px;
+            color: var(--primary-green);
+            margin-bottom: 12px;
+            display: block;
+        }
+        
+        .compact-feature-card h3 {
+            font-size: 18px;
+            color: var(--dark-green);
+            margin-bottom: 10px;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .compact-feature-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .impact-stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .stat-item {
+            margin: 15px;
+        }
+        
+        .stat-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        /* App Preview */
+        .app-preview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .phone-frame {
+            width: 280px;
+            height: 500px;
+            background-color: #222;
+            border-radius: 30px;
+            padding: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background-color: #f9f9f9;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .screen-content {
+            padding: 20px;
+            height: 100%;
+        }
+        
+        .phone-caption {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+            width: 280px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-green);
+            color: white;
+            padding: 50px 0 30px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--accent-green);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--accent-green);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .compact-feature-grid {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .compact-feature-card {
+                min-width: 200px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .primary-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+            
+            .step-cards {
+                flex-direction: column;
+            }
+            
+            .plants-display {
+                gap: 30px;
+            }
+            
+            .plant-img {
+                font-size: 40px;
+            }
+            
+            .plant-small {
+                font-size: 35px;
+            }
+            
+            .plant-medium {
+                font-size: 50px;
+            }
+            
+            .plant-large {
+                font-size: 65px;
+            }
+            
+            .compact-feature-grid {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .compact-feature-card {
+                min-width: 100%;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container"></div>
+    
+    <div class="container">
+        <!-- Header with Sign In -->
+	<header>
+ 	   <div class="logo">
+        	<div class="logo-icon">🌱</div>
+       	 	<div class="logo-text">Pocket Garden</div>
+    	   </div>
+
+    	<nav class="header-actions">
+        	<a href="community.html" style="text-decoration: none;">
+        	    <button class="sign-in-btn">
+        	        <i class="fas fa-users"></i> Community Garden
+        	    </button>
+      	        </a>
+
+        	<a href="login.html" style="text-decoration: none;">
+                	<button class="sign-in-btn">
+                	<i class="fas fa-sign-in-alt"></i> Sign In
+            		</button>
+        	</a>
+   	 </nav>
+	</header>
+
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Turn daily choices into a thriving garden.</h1>
+            <p class="hero-subtitle">Small actions. Real impact. Watch it grow.</p>
+            <p class="hero-description">Track habits, protect the planet, and grow alongside your community every day.</p>
+            	    <a href="login.html" style="text-decoration: none;">
+
+            <div class="cta-buttons">
+                <button class="primary-btn">
+                    <i class="fas fa-seedling"></i> Start Growing
+                </button></a>
+            </div>
+            
+            <div class="visual-preview">
+                <h3 style="color: var(--dark-green); margin-bottom: 20px; text-align: center;">Your Plant Shelf</h3>
+                
+                <div class="plants-display">
+                    <div class="plant">
+                        <div class="plant-img plant-small">🌱</div>
+                        <div class="plant-label">Seedling</div>
+                    </div>
+                    <div class="plant">
+                        <div class="plant-img plant-medium">🌿</div>
+                        <div class="plant-label">Growing</div>
+                    </div>
+                    <div class="plant">
+                        <div class="plant-img plant-large">🌳</div>
+                        <div class="plant-label">Thriving</div>
+                    </div>
+                </div>
+                
+                <p style="margin-bottom: 15px; color: #666; text-align: center;">Progress bar fills as you save & improve</p>
+                <div class="progress-container">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- How It Works -->
+        <section class="section">
+            <h2 class="section-title"> HOW IT WORKS</h2>
+            <p style="text-align: center; margin-bottom: 30px; font-size: 18px;">Simple, scroll-friendly</p>
+            
+            <div class="step-cards">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Log Your Day</h3>
+                    <p>Transport, food, energy & lifestyle choices</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Complete Missions</h3>
+                    <p>Daily tasks + goals <br>(easy / medium / hard)<br></p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Earn Points</h3>
+                    <p>Progress bar fills as you save & improve</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Grow Your Garden</h3>
+                    <p>Plants evolve through 3 stages as you stay consistent</p>
+                </div>
+            </div>
+            
+            <div class="micro-copy">
+                No guilt. No perfection. Just progress.
+            </div>
+        </section>
+        
+        <!-- Feature Highlights - Compact Single Line Layout -->
+        <section class="section">
+            <h2 class="section-title"> FEATURE HIGHLIGHTS</h2>
+            <p style="text-align: center; margin-bottom: 30px; font-size: 18px;">Show depth without overwhelming</p>
+            
+            <div class="compact-feature-grid">
+                <div class="compact-feature-card">
+                    <span class="compact-feature-icon">🌿</span>
+                    <h3>Your Plant Shelf</h3>
+                    <p>Plants represent your habits. Unlock new plants as you improve.</p>
+                </div>
+                
+                <div class="compact-feature-card">
+                    <span class="compact-feature-icon">🎯</span>
+                    <h3>Missions & Goals</h3>
+                    <p>Daily check-ins. Custom difficulty levels. Timer-based sessions.</p>
+                </div>
+                
+                <div class="compact-feature-card">
+                    <span class="compact-feature-icon">📊</span>
+                    <h3>Daily Summary</h3>
+                    <p>See how much you saved. Visual progress bar. Streaks tracking.</p>
+                </div>
+                
+                <div class="compact-feature-card">
+                    <span class="compact-feature-icon">🏆</span>
+                    <h3>Leaderboard</h3>
+                    <p>Compete with friends. Weekly challenges. Motivation, not pressure.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Why It Matters -->
+        <section class="section">
+            <h2 class="section-title"> WHY IT MATTERS</h2>
+            <p style="text-align: center; font-size: 20px; margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                Your everyday choices matter. This app turns mindful living into something visual, motivating, and rewarding.
+            </p>
+            
+            <div class="impact-stats">
+                <div class="stat-item">
+                    <div class="stat-icon">🌱</div>
+                    <div class="stat-value">10,000+</div>
+                    <div class="stat-label">Habits built</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">🚲</div>
+                    <div class="stat-value">50,000+</div>
+                    <div class="stat-label">Sustainable choices tracked</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">🌍</div>
+                    <div class="stat-value">500 tons</div>
+                    <div class="stat-label">CO₂ saved over time</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- App Preview -->
+        <section class="section">
+            <h2 class="section-title"> APP PREVIEW</h2>
+            <p style="text-align: center; margin-bottom: 40px; font-size: 18px;">See how Pocket Garden works</p>
+            
+            <div class="app-preview">
+                <div>
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <div class="screen-content">
+                                <h4 style="color: var(--dark-green); margin-bottom: 20px;">Login / Registration</h4>
+                                <p>Simple sign-up to start your garden journey</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="phone-caption">Login / registration screen</div>
+                </div>
+                
+                <div>
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <div class="screen-content">
+                                <h4 style="color: var(--dark-green); margin-bottom: 20px;">Plant Shelf</h4>
+                                <p>View your growing plants and progress</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="phone-caption">Home page with plant shelf</div>
+                </div>
+                
+                <div>
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <div class="screen-content">
+                                <h4 style="color: var(--dark-green); margin-bottom: 20px;">Daily Summary</h4>
+                                <p>Track your impact and savings</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="phone-caption">Daily summary screen</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Final CTA -->
+        <section class="section" style="text-align: center; background-color: rgba(200, 230, 201, 0.9);">
+            <h2 class="section-title"> Ready to start growing?</h2>
+            <p style="font-size: 20px; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                Join thousands of people who are already growing greener habits and making a positive impact.
+            </p>
+            
+            <div class="cta-buttons">
+                <button class="primary-btn" style="padding: 18px 40px;">
+                    <i class="fas fa-rocket"></i> Start Growing Today
+                </button>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Pocket Garden</h3>
+                    <p>Turn daily choices into a thriving garden. Small actions. Real impact.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Features</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Plant Shelf</a></li>
+                        <li><a href="#">Missions & Goals</a></li>
+                        <li><a href="#">Daily Summary</a></li>
+                        <li><a href="#">Leaderboard</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Get Started</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Start Growing</a></li>
+                        <li><a href="#">Sign Up Free</a></li>
+                        <li><a href="#">Log Today</a></li>
+                        <li><a href="#">Complete Mission</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2026 Pocket Garden. All rights reserved. Made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> for a greener planet.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Simple animations for interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate progress bar on page load
+            setTimeout(() => {
+                document.querySelector('.progress-bar').style.width = '85%';
+            }, 500);
+            
+            // Animate plant growth on hover
+            const plants = document.querySelectorAll('.plant-img');
+            plants.forEach(plant => {
+                plant.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.2) translateY(-10px)';
+                });
+                
+                plant.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) translateY(0)';
+                });
+            });
+            
+                        
+            
+            // Add subtle animation to shelf plants on page load
+            setTimeout(() => {
+                const smallPlant = document.querySelector('.plant-small');
+                const mediumPlant = document.querySelector('.plant-medium');
+                const largePlant = document.querySelector('.plant-large');
+                
+                smallPlant.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    smallPlant.style.transform = 'scale(1)';
+                    mediumPlant.style.transform = 'scale(1.1)';
+                }, 300);
+                setTimeout(() => {
+                    mediumPlant.style.transform = 'scale(1)';
+                    largePlant.style.transform = 'scale(1.1)';
+                }, 600);
+                setTimeout(() => {
+                    largePlant.style.transform = 'scale(1)';
+                }, 900);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

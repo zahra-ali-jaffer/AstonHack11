@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Garden - Login / Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-green: #478778;   /* Lincoln Green */
+            --light-green: #AFE1AF;     
+            --accent-green: #AFE1AF;    
+            --soft-green: #AFE1AF;      
+            --dark-green: #097969;      /* Cadmium Green */
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--light-gray);
+        }
+        
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('hackathon.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.4;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+        
+        /* Header & Navigation */
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+            color: var(--primary-green);
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-green);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .back-to-home {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary-green);
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-home:hover {
+            background-color: var(--soft-green);
+            transform: translateX(-5px);
+        }
+        
+        .back-to-home i {
+            margin-right: 8px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 120px);
+            padding: 40px 0;
+        }
+        
+        .auth-container {
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Left Side - Welcome Section */
+        .welcome-side {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .welcome-side.register-mode {
+            display: none;
+        }
+        
+        .welcome-side::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234caf50' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        
+        .welcome-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 36px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .welcome-subtitle {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list i {
+            margin-right: 12px;
+            color: var(--accent-green);
+            font-size: 20px;
+        }
+        
+        .plants-decoration {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .decoration-plant {
+            font-size: 40px;
+            opacity: 0.8;
+            transition: transform 0.5s ease;
+        }
+        
+        .decoration-plant:hover {
+            transform: translateY(-10px);
+        }
+        
+        /* Right Side - Forms */
+        .form-side {
+            flex: 1;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.5s ease;
+        }
+        
+        .form-side.register-mode {
+            flex: 1 0 100%;
+            max-width: 100%;
+        }
+        
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .form-container.register-mode {
+            max-width: 500px;
+        }
+        
+        .form-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 32px;
+            color: var(--dark-green);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .form-subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .form-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-radius: 50px;
+            background-color: var(--soft-green);
+            padding: 5px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .toggle-btn {
+            padding: 12px 30px;
+            border: none;
+            background: transparent;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            color: var(--dark-green);
+        }
+        
+        .toggle-btn.active {
+            background-color: var(--primary-green);
+            color: white;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-green);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-green);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            margin-right: 8px;
+        }
+        
+        .forgot-password {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+            color: #999;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #eee;
+        }
+        
+        .divider span {
+            background-color: white;
+            padding: 0 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            background-color: white;
+            color: #666;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+        }
+        
+        .terms-text {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 20px;
+        }
+        
+        .terms-text a {
+            color: var(--primary-green);
+            text-decoration: none;
+        }
+        
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Profile Icon Selection */
+        .profile-icon-selection {
+            margin-bottom: 25px;
+        }
+        
+        .profile-icon-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+        
+        .profile-icon-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        .icon-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 10px;
+        }
+        
+        .icon-option {
+            width: 75px;
+            height: 90px;
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9f9f9;
+            padding: 8px;
+        }
+        
+        .icon-option:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-green);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .icon-option.selected {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+            transform: translateY(-3px);
+            background-color: #f0f9f0;
+        }
+        
+        .icon-preview {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .icon-placeholder {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e0f2e1;
+            color: var(--primary-green);
+            font-size: 24px;
+            border-radius: 50%;
+        }
+        
+        .icon-name {
+            font-size: 10px;
+            text-align: center;
+            margin-top: 8px;
+            color: var(--dark-gray);
+            font-weight: 500;
+            line-height: 1.2;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .icon-hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-green);
+            color: white;
+            padding: 30px 0 20px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--accent-green);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .auth-container {
+                flex-direction: column;
+                max-width: 500px;
+            }
+            
+            .welcome-side, .form-side {
+                padding: 40px 30px;
+            }
+            
+            .plants-decoration {
+                gap: 20px;
+            }
+            
+            .decoration-plant {
+                font-size: 30px;
+            }
+            
+            .icon-options {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+            }
+            
+            .icon-option {
+                width: 70px;
+                height: 85px;
+            }
+            
+            .icon-preview, .icon-placeholder {
+                width: 40px;
+                height: 40px;
+                font-size: 22px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 26px;
+            }
+            
+            .welcome-title {
+                font-size: 28px;
+            }
+            
+            .form-title {
+                font-size: 26px;
+            }
+            
+            .form-container {
+                max-width: 100%;
+            }
+            
+            .remember-forgot {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .icon-options {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+            
+            .icon-option {
+                width: 65px;
+                height: 80px;
+            }
+            
+            .icon-preview, .icon-placeholder {
+                width: 38px;
+                height: 38px;
+                font-size: 20px;
+            }
+            
+            .icon-name {
+                font-size: 9px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .icon-options {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+            
+            .icon-option {
+                width: 60px;
+                height: 75px;
+                padding: 6px;
+                border-radius: 12px;
+            }
+            
+            .icon-preview, .icon-placeholder {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+            
+            .icon-name {
+                font-size: 8px;
+                margin-top: 6px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .form-toggle {
+                width: 100%;
+            }
+            
+            .toggle-btn {
+                flex: 1;
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .welcome-side, .form-side {
+                padding: 30px 20px;
+            }
+            
+            .icon-options {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 5px;
+            }
+            
+            .icon-option {
+                width: 55px;
+                height: 70px;
+            }
+            
+            .icon-name {
+                font-size: 7px;
+            }
+        }
+        
+        @media (max-width: 380px) {
+            .icon-options {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 4px;
+            }
+            
+            .icon-option {
+                width: 52px;
+                height: 68px;
+            }
+            
+            .icon-name {
+                font-size: 7px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container"></div>
+    
+    <div class="container">
+        <header>
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🌱</div>
+                <div class="logo-text">Pocket Garden</div>
+            </a>
+            <a href="index.html" class="back-to-home">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </header>
+        
+        <div class="main-content">
+            <div class="auth-container">
+                <!-- Left Side - Welcome Section -->
+                <div class="welcome-side" id="welcomeSide">
+                    <h2 class="welcome-title">Welcome Back to Your Garden</h2>
+                    <p class="welcome-subtitle">Sign in to continue growing your sustainable habits and watch your garden thrive.</p>
+                    
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> Track your daily sustainable choices</li>
+                        <li><i class="fas fa-check-circle"></i> Watch your plants grow as you progress</li>
+                        <li><i class="fas fa-check-circle"></i> Complete missions and earn rewards</li>
+                        <li><i class="fas fa-check-circle"></i> Join a community of eco-conscious gardeners</li>
+                    </ul>
+                    
+                    <div class="plants-decoration">
+                        <div class="decoration-plant">🌱</div>
+                        <div class="decoration-plant">🌿</div>
+                        <div class="decoration-plant">🌳</div>
+                        <div class="decoration-plant">🍃</div>
+                    </div>
+                </div>
+                
+                <!-- Right Side - Forms -->
+                <div class="form-side" id="formSide">
+                    <div class="form-container" id="formContainer">
+                        <h2 class="form-title">Welcome to Pocket Garden</h2>
+                        <p class="form-subtitle">Sign in to your account or create a new one</p>
+                        
+                        <div class="form-toggle">
+                            <button class="toggle-btn active" id="loginToggle">Login</button>
+                            <button class="toggle-btn" id="registerToggle">Register</button>
+                        </div>
+                        
+                        <!-- Login Form -->
+                        <form class="auth-form active" id="loginForm">
+                            <div class="form-group">
+                                <label for="loginEmail">Email Address</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="loginEmail" class="form-control" placeholder="you@example.com" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="loginPassword">Password</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                                </div>
+                            </div>
+                            
+                            <div class="remember-forgot">
+                                <div class="remember-me">
+                                    <input type="checkbox" id="rememberMe">
+                                    <label for="rememberMe">Remember me</label>
+                                </div>
+                                <a href="#" class="forgot-password">Forgot password?</a>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-sign-in-alt"></i> Sign In
+                            </button>
+                            
+                            <p class="terms-text">
+                                By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                            </p>
+                        </form>
+                        
+                        <!-- Registration Form -->
+                        <form class="auth-form" id="registerForm">
+                            <div class="form-group">
+                                <label for="registerName">Full Name</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="registerName" class="form-control" placeholder="Full Name" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="registerEmail">Email Address</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="registerEmail" class="form-control" placeholder="you@example.com" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="registerPassword">Password</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="registerPassword" class="form-control" placeholder="Create a password" required>
+                                </div>
+                                <small style="color: #666; display: block; margin-top: 5px;">Must be at least 8 characters</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="registerConfirmPassword">Confirm Password</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="registerConfirmPassword" class="form-control" placeholder="Confirm your password" required>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-icon-selection">
+                                <label class="profile-icon-label">Choose Your Profile Icon</label>
+                                <p class="profile-icon-description">Select the icon that suits your personality best!</p>
+                                
+                                <div class="icon-options">
+                                    <div class="icon-option" data-icon="1.png" data-name="Energetic">
+                                        <img src="1.png" alt="Energetic" class="icon-preview" onerror="this.style.display='none'; this.parentNode.querySelector('.icon-placeholder').style.display='flex';">
+                                        <div class="icon-placeholder" style="display: none;">🐙</div>
+                                        <div class="icon-name">Energetic</div>
+                                    </div>
+                                    
+                                    <div class="icon-option" data-icon="2.png" data-name="Proactive">
+                                        <img src="2.png" alt="Proactive" class="icon-preview" onerror="this.style.display='none'; this.parentNode.querySelector('.icon-placeholder').style.display='flex';">
+                                        <div class="icon-placeholder" style="display: none;">🐙</div>
+                                        <div class="icon-name">Proactive</div>
+                                    </div>
+                                    
+                                    <div class="icon-option selected" data-icon="3.png" data-name="Helpful">
+                                        <img src="3.png" alt="Helpful" class="icon-preview" onerror="this.style.display='none'; this.parentNode.querySelector('.icon-placeholder').style.display='flex';">
+                                        <div class="icon-placeholder" style="display: none;">🐙</div>
+                                        <div class="icon-name">Helpful</div>
+                                    </div>
+                                    
+                                    <div class="icon-option" data-icon="4.png" data-name="Teamwork">
+                                        <img src="4.png" alt="Teamwork" class="icon-preview" onerror="this.style.display='none'; this.parentNode.querySelector('.icon-placeholder').style.display='flex';">
+                                        <div class="icon-placeholder" style="display: none;">🐙</div>
+                                        <div class="icon-name">Teamwork</div>
+                                    </div>
+                                    
+                                    <div class="icon-option" data-icon="5.png" data-name="Social">
+                                        <img src="5.png" alt="Social" class="icon-preview" onerror="this.style.display='none'; this.parentNode.querySelector('.icon-placeholder').style.display='flex';">
+                                        <div class="icon-placeholder" style="display: none;">🐙</div>
+                                        <div class="icon-name">Social</div>
+                                    </div>
+                                    
+                                    <div class="icon-option" data-icon="6.png" data-name="Creative">
+                                        <img src="6.png" alt="Creative" class="icon-preview" onerror="this.style.display='none'; this.parentNode.querySelector('.icon-placeholder').style.display='flex';">
+                                        <div class="icon-placeholder" style="display: none;">🐙</div>
+                                        <div class="icon-name">Creative</div>
+                                    </div>
+                                    
+                                    <div class="icon-option" data-icon="7.png" data-name="Motivated">
+                                        <img src="7.png" alt="Motivated" class="icon-preview" onerror="this.style.display='none'; this.parentNode.querySelector('.icon-placeholder').style.display='flex';">
+                                        <div class="icon-placeholder" style="display: none;">🐙</div>
+                                        <div class="icon-name">Motivated</div>
+                                    </div>
+                                    
+                                    <div class="icon-option" data-icon="8.png" data-name="Curious">
+                                        <img src="8.png" alt="Curious" class="icon-preview" onerror="this.style.display='none'; this.parentNode.querySelector('.icon-placeholder').style.display='flex';">
+                                        <div class="icon-placeholder" style="display: none;">🐙</div>
+                                        <div class="icon-name">Curious</div>
+                                    </div>
+                                </div>
+                                
+                                <input type="hidden" id="selectedIcon" name="selectedIcon" value="3.png" required>
+                                <input type="hidden" id="selectedIconName" name="selectedIconName" value="Helpful">
+                                <p class="icon-hint">This will be your profile picture in the community</p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="starterPlant">Choose Your Starter Plant</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-seedling"></i>
+                                    <select id="starterPlant" class="form-control" required>
+                                        <option value="">Select a plant</option>
+                                        <option value="Lily">🌸 Lily - Perfect for beginners</option>
+                                        <option value="Tulip">🌷 Tulip - Low maintenance</option>
+                                        <option value="Rose">🌹 Rose - A little care, big bloom</option>
+                                        <option value="Sunflower">🌻 Sunflower - Bright and cheerful</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="remember-me">
+                                    <input type="checkbox" id="acceptTerms" required>
+                                    <label for="acceptTerms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-user-plus"></i> Create Account
+                            </button>
+                            
+                            <p class="terms-text">
+                                Already have an account? <a href="#" id="switchToLogin">Sign in here</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Pocket Garden</h3>
+                    <p>Turn daily choices into a thriving garden. Small actions. Real impact.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Features</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Plant Shelf</a></li>
+                        <li><a href="index.html">Missions & Goals</a></li>
+                        <li><a href="index.html">Daily Summary</a></li>
+                        <li><a href="index.html">Leaderboard</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2026 Pocket Garden. All rights reserved. Made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> for a greener planet.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form toggle functionality
+            const loginToggle = document.getElementById('loginToggle');
+            const registerToggle = document.getElementById('registerToggle');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const switchToLogin = document.getElementById('switchToLogin');
+            const welcomeSide = document.getElementById('welcomeSide');
+            const formSide = document.getElementById('formSide');
+            const formContainer = document.getElementById('formContainer');
+            const authContainer = document.querySelector('.auth-container');
+            
+            // Switch to login form
+            loginToggle.addEventListener('click', function() {
+                loginToggle.classList.add('active');
+                registerToggle.classList.remove('active');
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                
+                // Show welcome side
+                welcomeSide.classList.remove('register-mode');
+                formSide.classList.remove('register-mode');
+                formContainer.classList.remove('register-mode');
+                authContainer.style.maxWidth = '1000px';
+            });
+            
+            // Switch to register form
+            registerToggle.addEventListener('click', function() {
+                registerToggle.classList.add('active');
+                loginToggle.classList.remove('active');
+                registerForm.classList.add('active');
+                loginForm.classList.remove('active');
+                
+                // Hide welcome side
+                welcomeSide.classList.add('register-mode');
+                formSide.classList.add('register-mode');
+                formContainer.classList.add('register-mode');
+                authContainer.style.maxWidth = '600px';
+            });
+            
+            // Switch from register form to login
+            switchToLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginToggle.click();
+            });
+            
+            // Profile icon selection
+            const iconOptions = document.querySelectorAll('.icon-option');
+            const selectedIconInput = document.getElementById('selectedIcon');
+            const selectedIconNameInput = document.getElementById('selectedIconName');
+            
+            iconOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    iconOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Update hidden input values
+                    const iconValue = this.getAttribute('data-icon');
+                    const iconName = this.getAttribute('data-name');
+                    selectedIconInput.value = iconValue;
+                    selectedIconNameInput.value = iconName;
+                    
+                    // Add a subtle animation
+                    this.style.transform = 'translateY(-5px) scale(1.05)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateY(-3px) scale(1)';
+                    }, 200);
+                    
+                    // Show a small confirmation message
+                    const iconNameElement = this.querySelector('.icon-name');
+                    const originalName = iconNameElement.textContent;
+                    iconNameElement.textContent = "✓ Selected!";
+                    iconNameElement.style.color = 'var(--primary-green)';
+                    iconNameElement.style.fontWeight = 'bold';
+                    
+                    setTimeout(() => {
+                        iconNameElement.textContent = originalName;
+                        iconNameElement.style.color = '';
+                        iconNameElement.style.fontWeight = '';
+                    }, 1500);
+                });
+            });
+            
+            // Animate decoration plants
+            const decorationPlants = document.querySelectorAll('.decoration-plant');
+            decorationPlants.forEach((plant, index) => {
+                setTimeout(() => {
+                    plant.style.transform = 'translateY(-10px)';
+                    setTimeout(() => {
+                        plant.style.transform = 'translateY(0)';
+                    }, 500);
+                }, index * 300);
+            });
+            
+            // Add hover effect to social buttons
+            const socialButtons = document.querySelectorAll('.social-btn');
+            socialButtons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.1)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // ==================== FORM SUBMISSION HANDLING ====================
+            const loginFormElement = document.getElementById('loginForm');
+            const registerFormElement = document.getElementById('registerForm');
+            
+            // Simple User Storage Management
+            const UserManager = {
+                // Get all users from localStorage
+                getUsers: function() {
+                    return JSON.parse(localStorage.getItem('users') || '{}');
+                },
+                
+                // Save users to localStorage
+                saveUsers: function(users) {
+                    localStorage.setItem('users', JSON.stringify(users));
+                },
+                
+                // Check if email exists
+                emailExists: function(email) {
+                    const users = this.getUsers();
+                    return Object.values(users).some(user => user.email === email);
+                },
+                
+                // Register new user
+                register: function(userData) {
+                    if (this.emailExists(userData.email)) {
+                        return { success: false, message: 'Email already registered.' };
+                    }
+                    
+                    const users = this.getUsers();
+                    const userId = 'user_' + Date.now();
+                    
+                    const newUser = {
+                        id: userId,
+                        name: userData.name,
+                        email: userData.email,
+                        password: userData.password,
+                        profileIcon: userData.profileIcon,
+                        profileIconName: userData.profileIconName,
+                        starterPlant: userData.starterPlant,
+                        totalPoints: 0,
+                        streak: 0,
+                        totalKgSaved: 0,
+                        baselineSet: false, // New users need to set baseline
+                        userBaseline: null,
+                        weeklyData: [0, 0, 0, 0, 0, 0, 0],
+                        categorySavings: { transport: 0, food: 0, energy: 0, shopping: 0 },
+                        activeChallenges: [],
+                        dailyHabits: [],
+                        lastCheckInDate: null,
+                        joinDate: new Date().toISOString()
+                    };
+                    
+                    users[userId] = newUser;
+                    this.saveUsers(users);
+                    localStorage.setItem('currentUserId', userId);
+                    
+                    return { success: true, user: newUser };
+                },
+                
+                // Login user
+                login: function(email, password) {
+                    const users = this.getUsers();
+                    const user = Object.values(users).find(u => u.email === email && u.password === password);
+                    
+                    if (user) {
+                        localStorage.setItem('currentUserId', user.id);
+                        return { success: true, user: user };
+                    }
+                    
+                    return { success: false, message: 'Invalid email or password.' };
+                }
+            };
+            
+            // ==================== LOGIN FORM SUBMISSION ====================
+            loginFormElement.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                if (email && password) {
+                    const result = UserManager.login(email, password);
+                    
+                    if (result.success) {
+                        const user = result.user;
+                        console.log('User logged in:', user);
+                        
+                        // LOGIN: Always go to dashboard.html
+                        alert(`Welcome back, ${user.name}! Redirecting to your dashboard...`);
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        alert(result.message || 'Invalid email or password. Please try again.');
+                    }
+                } else {
+                    alert('Please fill in all required fields.');
+                }
+            });
+            
+            // ==================== REGISTRATION FORM SUBMISSION ====================
+            registerFormElement.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                const starterPlant = document.getElementById('starterPlant').value;
+                const selectedIcon = document.getElementById('selectedIcon').value;
+                const selectedIconName = document.getElementById('selectedIconName').value;
+                
+                if (!name || !email || !password || !confirmPassword || !starterPlant || !selectedIcon) {
+                    alert('Please fill in all required fields, including selecting a profile icon.');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match. Please try again.');
+                    return;
+                }
+                
+                if (password.length < 8) {
+                    alert('Password must be at least 8 characters long.');
+                    return;
+                }
+                
+                const plantSelect = document.getElementById('starterPlant');
+                const selectedPlantText = plantSelect.options[plantSelect.selectedIndex].text;
+                const plantName = selectedPlantText.split(' - ')[0];
+                
+                // Register user
+                const userData = {
+                    name: name,
+                    email: email,
+                    password: password,
+                    profileIcon: selectedIcon,
+                    profileIconName: selectedIconName,
+                    starterPlant: plantName
+                };
+                
+                const result = UserManager.register(userData);
+                
+                if (result.success) {
+                    // REGISTER: Go to baseline.html
+                    alert(`Welcome to Pocket Garden, ${name}!\n\n` +
+                          `🌱 Your ${plantName} starter plant is ready to grow.\n` +
+                          `🐙 Your profile icon: ${selectedIconName}\n\n` +
+                          `Next, let's set up your eco-habits baseline to track your progress!`);
+                    
+                    // Redirect to baseline.html for NEW users
+                    window.location.href = 'baseline.html';
+                } else {
+                    alert(result.message || 'Registration failed. Please try again.');
+                }
+            });
+            
+            // Focus on first input field
+            document.getElementById('loginEmail').focus();
+        });
+    </script>
+</body>
+</html>

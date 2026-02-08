@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Your Eco Baseline - Pocket Garden</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-green: #478778;
+            --light-green: #AFE1AF;
+            --accent-green: #AFE1AF;
+            --soft-green: #AFE1AF;
+            --dark-green: #097969;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-gray);
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto;
+        }
+        
+        /* Background */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('hackathon.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.5;
+        }
+        
+        header {
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+            color: var(--primary-green);
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-green);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-btn {
+            background-color: transparent;
+            border: 2px solid var(--primary-green);
+            color: var(--primary-green);
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .nav-btn:hover {
+            background-color: var(--primary-green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* User Profile */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .profile-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--soft-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-green);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .profile-circle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .profile-icon {
+            font-size: 24px;
+            color: var(--primary-green);
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e0f2e1;
+            color: var(--primary-green);
+            font-size: 24px;
+        }
+        
+        /* Setup Container */
+        .setup-container {
+            min-height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px 0;
+        }
+        
+        /* Setup Card */
+        .setup-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--light-green);
+        }
+        
+        /* Progress Section */
+        .progress-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .progress-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 36px;
+            color: var(--dark-green);
+            margin-bottom: 15px;
+        }
+        
+        .progress-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .progress-bar-container {
+            margin: 30px auto;
+            max-width: 600px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--light-green), var(--primary-green));
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Question Container */
+        .question-container {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .question-container.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .question-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .question-icon {
+            font-size: 40px;
+            margin-right: 20px;
+            width: 70px;
+            height: 70px;
+            background-color: var(--soft-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .question-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 28px;
+            color: var(--dark-green);
+        }
+        
+        .question-text {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+        
+        /* Options Grid */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        
+        .option-card {
+            background-color: white;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 25px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 160px;
+        }
+        
+        .option-card:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option-card.selected {
+            border-color: var(--primary-green);
+            background-color: #f0f9f0;
+            box-shadow: 0 0 0 3px rgba(71, 135, 120, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .option-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .option-text {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+        
+        /* Single Row Options */
+        .single-row-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        
+        .single-row-option {
+            background-color: white;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 25px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 140px;
+        }
+        
+        .single-row-option:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .single-row-option.selected {
+            border-color: var(--primary-green);
+            background-color: #f0f9f0;
+            box-shadow: 0 0 0 3px rgba(71, 135, 120, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-btn-question {
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 2px solid var(--primary-green);
+            background-color: white;
+            color: var(--primary-green);
+            min-width: 180px;
+        }
+        
+        .nav-btn-question:hover {
+            background-color: var(--soft-green);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-btn-question.next {
+            background-color: var(--primary-green);
+            color: white;
+        }
+        
+        .nav-btn-question.next:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(71, 135, 120, 0.3);
+        }
+        
+        .nav-btn-question:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        .nav-btn-question.hidden {
+            visibility: hidden;
+        }
+        
+        /* Results Card */
+        .results-card {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .results-card.active {
+            display: block;
+        }
+        
+        .results-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 36px;
+            color: var(--dark-green);
+            margin-bottom: 20px;
+        }
+        
+        .results-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .rank-display {
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin: 40px auto;
+            max-width: 500px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .rank-circle {
+            width: 120px;
+            height: 120px;
+            background-color: white;
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: var(--primary-green);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .rank-name {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .rank-description {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        
+        .rank-message {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-top: 20px;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+        }
+        
+        .action-btn {
+            padding: 18px 45px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-width: 220px;
+            border: none;
+        }
+        
+        .primary-btn {
+            background-color: var(--primary-green);
+            color: white;
+            box-shadow: 0 4px 15px rgba(71, 135, 120, 0.3);
+        }
+        
+        .primary-btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(71, 135, 120, 0.4);
+        }
+        
+        .secondary-btn {
+            background-color: white;
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+        }
+        
+        .secondary-btn:hover {
+            background-color: var(--soft-green);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+        }
+        
+        /* Profile Dropdown */
+        .profile-dropdown {
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 250px;
+            z-index: 1001;
+            display: none;
+            overflow: hidden;
+        }
+        
+        .profile-dropdown.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .dropdown-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .dropdown-profile-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            border: 4px solid white;
+            overflow: hidden;
+        }
+        
+        .dropdown-profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .dropdown-profile-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e0f2e1;
+            color: var(--primary-green);
+            font-size: 36px;
+        }
+        
+        .dropdown-user-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .dropdown-user-email {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .dropdown-menu {
+            padding: 20px 0;
+        }
+        
+        .dropdown-item {
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--light-gray);
+            color: var(--primary-green);
+        }
+        
+        .dropdown-divider {
+            height: 1px;
+            background-color: #eee;
+            margin: 10px 0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .header-actions {
+                gap: 15px;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            
+            .profile-circle {
+                width: 45px;
+                height: 45px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .setup-card {
+                padding: 30px;
+            }
+            
+            .progress-title {
+                font-size: 28px;
+            }
+            
+            .question-title {
+                font-size: 24px;
+            }
+            
+            .question-text {
+                font-size: 18px;
+            }
+            
+            .options-grid,
+            .single-row-options {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .option-card,
+            .single-row-option {
+                min-height: 140px;
+                padding: 20px 15px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-btn-question {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+            }
+            
+            .rank-display {
+                padding: 30px 20px;
+            }
+            
+            .rank-name {
+                font-size: 28px;
+            }
+            
+            /* Mobile header adjustments */
+            .header-actions {
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            
+            .nav-btn span:not(.fa) {
+                display: none;
+            }
+            
+            .nav-btn .fa {
+                margin-right: 0;
+            }
+            
+            .logo-text {
+                font-size: 24px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .setup-card {
+                padding: 20px;
+            }
+            
+            .options-grid,
+            .single-row-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .question-icon {
+                margin-right: 0;
+            }
+            
+            .progress-title {
+                font-size: 24px;
+            }
+            
+            .header-actions {
+                gap: 8px;
+            }
+            
+            .nav-btn {
+                padding: 6px 8px;
+                min-width: auto;
+            }
+            
+            .profile-circle {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container"></div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">🌱</div>
+                <div class="logo-text">Pocket Garden</div>
+            </div>
+            
+            <nav class="header-actions">
+                <a href="dashboard.html" class="nav-btn">
+                    <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
+                </a>
+                <a href="community.html" class="nav-btn">
+                    <i class="fas fa-users"></i> <span>Community</span>
+                </a>
+                <a href="html.html" class="nav-btn">
+                    <i class="fas fa-seedling"></i> <span>Your Garden</span>
+                </a>
+                
+                <div class="user-profile">
+                    <div class="profile-circle" id="profileCircle">
+                        <!-- Profile icon/image will be loaded here -->
+                        <div class="profile-placeholder" id="profilePlaceholder">🐙</div>
+                        <img id="profileImage" class="profile-image" style="display: none;" alt="Profile Icon">
+                    </div>
+                </div>
+            </nav>
+        </div>
+        
+        <!-- Profile Dropdown -->
+        <div class="profile-dropdown" id="profileDropdown">
+            <div class="dropdown-header">
+                <div class="dropdown-profile-circle" id="dropdownProfileCircle">
+                    <div class="dropdown-profile-placeholder" id="dropdownProfilePlaceholder">🐙</div>
+                    <img id="dropdownProfileImage" class="dropdown-profile-image" style="display: none;" alt="Profile Icon">
+                </div>
+                <div class="dropdown-user-name" id="dropdownUserName">User Name</div>
+                <div class="dropdown-user-email" id="dropdownUserEmail">user@example.com</div>
+            </div>
+            <div class="dropdown-menu">
+                <a href="profile.html" class="dropdown-item">
+                    <i class="fas fa-user"></i> My Profile
+                </a>
+                <a href="dashboard.html" class="dropdown-item">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="html.html" class="dropdown-item">
+                    <i class="fas fa-seedling"></i> Your Garden
+                </a>
+                <a href="settings.html" class="dropdown-item">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="index.html" class="dropdown-item" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="setup-container">
+            <div class="setup-card">
+                <!-- Progress Section -->
+                <div class="progress-section" id="progressSection">
+                    <h1 class="progress-title">🌍 Eco Tracker</h1>
+                    <p class="progress-subtitle">Track your daily carbon footprint 👣</p>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>Setup your baseline</span>
+                            <span id="progressPercentage">0%</span>
+                        </div>
+                    </div>
+                    
+                    <p class="progress-subtitle">
+                        Uncover Your Daily Eco Habits 🌱<br>
+                        Setup your baseline to start earning rewards!
+                    </p>
+                </div>
+                
+                <!-- Question 1: Transport Method -->
+                <div class="question-container active" id="question1">
+                    <div class="question-header">
+                        <div class="question-icon">🚗</div>
+                        <div>
+                            <h2 class="question-title">TRANSPORT</h2>
+                            <p class="question-text">How do you usually get around on a typical day?</p>
+                        </div>
+                    </div>
+                    
+                    <div class="options-grid">
+                        <div class="option-card" data-value="walking" data-question="1">
+                            <div class="option-icon">🚶</div>
+                            <div class="option-text">Walking</div>
+                        </div>
+                        <div class="option-card" data-value="cycling" data-question="1">
+                            <div class="option-icon">🚲</div>
+                            <div class="option-text">Cycling</div>
+                        </div>
+                        <div class="option-card" data-value="scooter" data-question="1">
+                            <div class="option-icon">🛴</div>
+                            <div class="option-text">Scooter</div>
+                        </div>
+                        <div class="option-card" data-value="bus" data-question="1">
+                            <div class="option-icon">🚌</div>
+                            <div class="option-text">Bus</div>
+                        </div>
+                        <div class="option-card" data-value="train" data-question="1">
+                            <div class="option-icon">🚆</div>
+                            <div class="option-text">Train</div>
+                        </div>
+                        <div class="option-card" data-value="car-shared" data-question="1">
+                            <div class="option-icon">🚗</div>
+                            <div class="option-text">Car (shared)</div>
+                        </div>
+                        <div class="option-card" data-value="motorbike" data-question="1">
+                            <div class="option-icon">🏍</div>
+                            <div class="option-text">Motorbike</div>
+                        </div>
+                        <div class="option-card" data-value="car-own" data-question="1">
+                            <div class="option-icon">🚗</div>
+                            <div class="option-text">Car (on your own)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-buttons">
+                        <button class="nav-btn-question prev hidden" id="prev1">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="nav-btn-question next" id="next1" disabled>
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Question 2: Transport Distance -->
+                <div class="question-container" id="question2">
+                    <div class="question-header">
+                        <div class="question-icon">🚗</div>
+                        <div>
+                            <h2 class="question-title">TRANSPORT</h2>
+                            <p class="question-text">About how far do you travel each day?</p>
+                        </div>
+                    </div>
+                    
+                    <div class="single-row-options">
+                        <div class="single-row-option" data-value="very-local" data-question="2">
+                            <div class="option-icon">🏠</div>
+                            <div class="option-text">Very local (0–3 miles)</div>
+                        </div>
+                        <div class="single-row-option" data-value="short-trip" data-question="2">
+                            <div class="option-icon">☕</div>
+                            <div class="option-text">Short trip (3–6 miles)</div>
+                        </div>
+                        <div class="single-row-option" data-value="medium-commute" data-question="2">
+                            <div class="option-icon">🏙</div>
+                            <div class="option-text">Medium commute (6–9 miles)</div>
+                        </div>
+                        <div class="single-row-option" data-value="long-journey" data-question="2">
+                            <div class="option-icon">🌆</div>
+                            <div class="option-text">Longer journey (9+ miles)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-buttons">
+                        <button class="nav-btn-question prev" id="prev2">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="nav-btn-question next" id="next2" disabled>
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Question 3: Food Type -->
+                <div class="question-container" id="question3">
+                    <div class="question-header">
+                        <div class="question-icon">🍽</div>
+                        <div>
+                            <h2 class="question-title">FOOD</h2>
+                            <p class="question-text">Which plate looks most like your usual meals?</p>
+                        </div>
+                    </div>
+                    
+                    <div class="single-row-options">
+                        <div class="single-row-option" data-value="plant-based" data-question="3">
+                            <div class="option-icon">🌱</div>
+                            <div class="option-text">Fully plant-based</div>
+                        </div>
+                        <div class="single-row-option" data-value="vegetarian" data-question="3">
+                            <div class="option-icon">🥗</div>
+                            <div class="option-text">Vegetarian</div>
+                        </div>
+                        <div class="single-row-option" data-value="some-fish" data-question="3">
+                            <div class="option-icon">🍣</div>
+                            <div class="option-text">Some fish</div>
+                        </div>
+                        <div class="single-row-option" data-value="some-meat" data-question="3">
+                            <div class="option-icon">🍗</div>
+                            <div class="option-text">Some meat or fish</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-buttons">
+                        <button class="nav-btn-question prev" id="prev3">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="nav-btn-question next" id="next3" disabled>
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Question 4: Food Frequency -->
+                <div class="question-container" id="question4">
+                    <div class="question-header">
+                        <div class="question-icon">🍽</div>
+                        <div>
+                            <h2 class="question-title">FOOD</h2>
+                            <p class="question-text">How often do you eat meat in a typical week?</p>
+                        </div>
+                    </div>
+                    
+                    <div class="single-row-options">
+                        <div class="single-row-option" data-value="0-1-days" data-question="4">
+                            <div class="option-icon">🌱</div>
+                            <div class="option-text">0–1 days</div>
+                        </div>
+                        <div class="single-row-option" data-value="2-3-days" data-question="4">
+                            <div class="option-icon">🙂</div>
+                            <div class="option-text">2–3 days</div>
+                        </div>
+                        <div class="single-row-option" data-value="4-5-days" data-question="4">
+                            <div class="option-icon">😐</div>
+                            <div class="option-text">4–5 days</div>
+                        </div>
+                        <div class="single-row-option" data-value="most-days" data-question="4">
+                            <div class="option-icon">🍖</div>
+                            <div class="option-text">Most days</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-buttons">
+                        <button class="nav-btn-question prev" id="prev4">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="nav-btn-question next" id="next4" disabled>
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Question 5: Energy Comfort -->
+                <div class="question-container" id="question5">
+                    <div class="question-header">
+                        <div class="question-icon">💡</div>
+                        <div>
+                            <h2 class="question-title">ENERGY</h2>
+                            <p class="question-text">How do you usually keep your space comfortable?</p>
+                        </div>
+                    </div>
+                    
+                    <div class="single-row-options">
+                        <div class="single-row-option" data-value="natural" data-question="5">
+                            <div class="option-icon">🌿</div>
+                            <div class="option-text">Fresh air / natural ventilation</div>
+                        </div>
+                        <div class="single-row-option" data-value="fan" data-question="5">
+                            <div class="option-icon">🌬</div>
+                            <div class="option-text">Fan or extra layers only</div>
+                        </div>
+                        <div class="single-row-option" data-value="sometimes" data-question="5">
+                            <div class="option-icon">😌</div>
+                            <div class="option-text">Heating or air con sometimes</div>
+                        </div>
+                        <div class="single-row-option" data-value="most-day" data-question="5">
+                            <div class="option-icon">🥶</div>
+                            <div class="option-text">Heating or air con on most of the day</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-buttons">
+                        <button class="nav-btn-question prev" id="prev5">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="nav-btn-question next" id="next5" disabled>
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Question 6: Energy Habits -->
+                <div class="question-container" id="question6">
+                    <div class="question-header">
+                        <div class="question-icon">💡</div>
+                        <div>
+                            <h2 class="question-title">ENERGY</h2>
+                            <p class="question-text">When you leave a room, lights and devices are…</p>
+                        </div>
+                    </div>
+                    
+                    <div class="single-row-options">
+                        <div class="single-row-option" data-value="always-off" data-question="6">
+                            <div class="option-icon">✅</div>
+                            <div class="option-text">Always switched off</div>
+                        </div>
+                        <div class="single-row-option" data-value="sometimes-on" data-question="6">
+                            <div class="option-icon">⚠</div>
+                            <div class="option-text">Sometimes left on</div>
+                        </div>
+                        <div class="single-row-option" data-value="usually-on" data-question="6">
+                            <div class="option-icon">🔌</div>
+                            <div class="option-text">Usually left on or plugged in</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-buttons">
+                        <button class="nav-btn-question prev" id="prev6">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="nav-btn-question next" id="next6" disabled>
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Question 7: Shopping Habits -->
+                <div class="question-container" id="question7">
+                    <div class="question-header">
+                        <div class="question-icon">🛍</div>
+                        <div>
+                            <h2 class="question-title">GOODS</h2>
+                            <p class="question-text">Which shopping habit sounds most like you?</p>
+                        </div>
+                    </div>
+                    
+                    <div class="single-row-options">
+                        <div class="single-row-option" data-value="buy-new" data-question="7">
+                            <div class="option-icon">🛍</div>
+                            <div class="option-text">Buy new items often</div>
+                        </div>
+                        <div class="single-row-option" data-value="essentials" data-question="7">
+                            <div class="option-icon">🛒</div>
+                            <div class="option-text">Stick to essentials</div>
+                        </div>
+                        <div class="single-row-option" data-value="second-hand" data-question="7">
+                            <div class="option-icon">🔁</div>
+                            <div class="option-text">Prefer second-hand or reuse</div>
+                        </div>
+                        <div class="single-row-option" data-value="no-buy" data-question="7">
+                            <div class="option-icon">❌</div>
+                            <div class="option-text">Try for no-buy days</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-buttons">
+                        <button class="nav-btn-question prev" id="prev7">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="nav-btn-question next" id="next7" disabled>
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Question 8: Waste Habits -->
+                <div class="question-container" id="question8">
+                    <div class="question-header">
+                        <div class="question-icon">♻️</div>
+                        <div>
+                            <h2 class="question-title">WASTE</h2>
+                            <p class="question-text">What happens to most of your rubbish?</p>
+                        </div>
+                    </div>
+                    
+                    <div class="single-row-options">
+                        <div class="single-row-option" data-value="recycled" data-question="8">
+                            <div class="option-icon">♻</div>
+                            <div class="option-text">Recycled or composted</div>
+                        </div>
+                        <div class="single-row-option" data-value="mixed" data-question="8">
+                            <div class="option-icon">🗑</div>
+                            <div class="option-text">Mixed waste</div>
+                        </div>
+                        <div class="single-row-option" data-value="not-sure" data-question="8">
+                            <div class="option-icon">🤷</div>
+                            <div class="option-text">Not really sure</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-buttons">
+                        <button class="nav-btn-question prev" id="prev8">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="nav-btn-question next" id="next8" disabled>
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Question 9: Reflection -->
+                <div class="question-container" id="question9">
+                    <div class="question-header">
+                        <div class="question-icon">🧠</div>
+                        <div>
+                            <h2 class="question-title">REFLECTION</h2>
+                            <p class="question-text">Which of these feels hardest to change right now?</p>
+                        </div>
+                    </div>
+                    
+                    <div class="options-grid">
+                        <div class="option-card" data-value="travel" data-question="9">
+                            <div class="option-icon">🚗</div>
+                            <div class="option-text">Travel</div>
+                        </div>
+                        <div class="option-card" data-value="food" data-question="9">
+                            <div class="option-icon">🍽</div>
+                            <div class="option-text">Food</div>
+                        </div>
+                        <div class="option-card" data-value="energy" data-question="9">
+                            <div class="option-icon">💡</div>
+                            <div class="option-text">Energy use</div>
+                        </div>
+                        <div class="option-card" data-value="not-tried" data-question="9">
+                            <div class="option-icon">😅</div>
+                            <div class="option-text">I haven't tried yet</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-buttons">
+                        <button class="nav-btn-question prev" id="prev9">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="nav-btn-question next" id="next9" disabled>
+                            Complete Setup <i class="fas fa-check-circle"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Results Card -->
+                <div class="results-card" id="resultsCard">
+                    <h2 class="results-title">🌍 Eco Tracker</h2>
+                    <p class="results-subtitle">Track your daily carbon footprint 👣</p>
+                    
+                    <div class="rank-display">
+                        <h3 style="margin-bottom: 20px; font-size: 24px;">💯 Perfect! Your Eco Baseline is locked in! 🔒</h3>
+                        <p style="margin-bottom: 30px; font-size: 18px;">Your starting rank is:</p>
+                        
+                        <div class="rank-circle" id="rankIcon">🔘</div>
+                        <div class="rank-name" id="rankName">Carbon Recruit</div>
+                        <div class="rank-description">Earn points to level up!</div>
+                        
+                        <p class="rank-message">
+                            Your baseline has been saved. You can update your preferences anytime from your dashboard.
+                        </p>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn primary-btn" id="goToDashboardBtn">
+                            <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+                        </button>
+                        <button class="action-btn secondary-btn" id="editBaselineBtn">
+                            <i class="fas fa-edit"></i> Edit My Answers
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>© 2026 Pocket Garden. Your eco journey starts here.</p>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ==================== HEADER PROFILE FUNCTIONALITY ====================
+            const profileCircle = document.getElementById('profileCircle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            // Load user profile data
+            function loadUserProfile() {
+                const currentUserId = localStorage.getItem('currentUserId');
+                const users = JSON.parse(localStorage.getItem('users') || '{}');
+                
+                if (currentUserId && users[currentUserId]) {
+                    const user = users[currentUserId];
+                    
+                    // Update profile circle
+                    const profileImage = document.getElementById('profileImage');
+                    const profilePlaceholder = document.getElementById('profilePlaceholder');
+                    
+                    // Update dropdown profile
+                    const dropdownProfileImage = document.getElementById('dropdownProfileImage');
+                    const dropdownProfilePlaceholder = document.getElementById('dropdownProfilePlaceholder');
+                    const dropdownUserName = document.getElementById('dropdownUserName');
+                    const dropdownUserEmail = document.getElementById('dropdownUserEmail');
+                    
+                    // Set user details in dropdown
+                    dropdownUserName.textContent = user.name || 'User Name';
+                    dropdownUserEmail.textContent = user.email || 'user@example.com';
+                    
+                    // Try to load profile icon/image
+                    if (user.profileIcon) {
+                        const imgSrc = user.profileIcon;
+                        const img = new Image();
+                        img.onload = function() {
+                            // Image exists, show it
+                            profileImage.src = imgSrc;
+                            profileImage.style.display = 'block';
+                            profilePlaceholder.style.display = 'none';
+                            
+                            dropdownProfileImage.src = imgSrc;
+                            dropdownProfileImage.style.display = 'block';
+                            dropdownProfilePlaceholder.style.display = 'none';
+                        };
+                        img.onerror = function() {
+                            // Image doesn't exist, show placeholder with emoji
+                            profilePlaceholder.textContent = '🐙';
+                            profilePlaceholder.style.display = 'flex';
+                            profileImage.style.display = 'none';
+                            
+                            dropdownProfilePlaceholder.textContent = '🐙';
+                            dropdownProfilePlaceholder.style.display = 'flex';
+                            dropdownProfileImage.style.display = 'none';
+                        };
+                        img.src = imgSrc;
+                    } else {
+                        // No profile icon, show placeholder
+                        profilePlaceholder.textContent = '🐙';
+                        profilePlaceholder.style.display = 'flex';
+                        profileImage.style.display = 'none';
+                        
+                        dropdownProfilePlaceholder.textContent = '🐙';
+                        dropdownProfilePlaceholder.style.display = 'flex';
+                        dropdownProfileImage.style.display = 'none';
+                    }
+                }
+            }
+            
+            // Toggle profile dropdown
+            profileCircle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('active');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!profileDropdown.contains(e.target) && !profileCircle.contains(e.target)) {
+                    profileDropdown.classList.remove('active');
+                }
+            });
+            
+            // Logout functionality
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Clear current user session
+                localStorage.removeItem('currentUserId');
+                localStorage.removeItem('currentUser');
+                // Redirect to login page
+                window.location.href = 'login.html';
+            });
+            
+            // Load user profile on page load
+            loadUserProfile();
+            
+            // ==================== BASELINE QUESTIONNAIRE FUNCTIONALITY ====================
+            // Configuration
+            const totalQuestions = 9;
+            const questions = Array.from({length: totalQuestions}, (_, i) => i + 1);
+            const userSelections = {};
+            
+            // Initialize user selections
+            questions.forEach(q => {
+                userSelections[q] = null;
+            });
+            
+            // Get DOM elements
+            const progressFill = document.getElementById('progressFill');
+            const progressPercentage = document.getElementById('progressPercentage');
+            const questionContainers = document.querySelectorAll('.question-container');
+            const resultsCard = document.getElementById('resultsCard');
+            const rankIcon = document.getElementById('rankIcon');
+            const rankName = document.getElementById('rankName');
+            
+            // Current question tracking
+            let currentQuestion = 1;
+            
+            // Initialize progress
+            updateProgress();
+            
+            // Initialize navigation buttons
+            updateNavigationButtons();
+            
+            // Option selection functionality
+            document.querySelectorAll('.option-card, .single-row-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionNum = parseInt(this.getAttribute('data-question'));
+                    const value = this.getAttribute('data-value');
+                    const text = this.querySelector('.option-text').textContent;
+                    
+                    // Remove selected class from all options in this question
+                    const questionOptions = document.querySelectorAll(`[data-question="${questionNum}"]`);
+                    questionOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Store selection
+                    userSelections[questionNum] = {
+                        value: value,
+                        text: text
+                    };
+                    
+                    // Enable next button for this question
+                    const nextBtn = document.getElementById(`next${questionNum}`);
+                    if (nextBtn) {
+                        nextBtn.disabled = false;
+                    }
+                    
+                    // Update progress
+                    updateProgress();
+                });
+            });
+            
+            // Next button functionality
+            questions.forEach(q => {
+                const nextBtn = document.getElementById(`next${q}`);
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', function() {
+                        if (q < totalQuestions) {
+                            // Move to next question
+                            showQuestion(q + 1);
+                        } else {
+                            // Show results
+                            showResults();
+                        }
+                    });
+                }
+            });
+            
+            // Previous button functionality
+            questions.slice(1).forEach(q => { // Start from question 2
+                const prevBtn = document.getElementById(`prev${q}`);
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', function() {
+                        showQuestion(q - 1);
+                    });
+                }
+            });
+            
+            // Go to Dashboard button
+            document.getElementById('goToDashboardBtn').addEventListener('click', function() {
+                saveBaselineData();
+                window.location.href = 'dashboard.html';
+            });
+            
+            // Edit Baseline button
+            document.getElementById('editBaselineBtn').addEventListener('click', function() {
+                showQuestion(1);
+            });
+            
+            // Functions
+            function showQuestion(questionNum) {
+                // Hide all questions
+                questionContainers.forEach(container => {
+                    container.classList.remove('active');
+                });
+                
+                // Hide results
+                resultsCard.classList.remove('active');
+                
+                // Show selected question
+                const questionToShow = document.getElementById(`question${questionNum}`);
+                if (questionToShow) {
+                    questionToShow.classList.add('active');
+                    currentQuestion = questionNum;
+                    
+                    // Restore selection if previously made
+                    restoreSelection(questionNum);
+                    
+                    // Update navigation buttons
+                    updateNavigationButtons();
+                    
+                    // Scroll to top of question
+                    questionToShow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+            
+            function showResults() {
+                // Hide all questions
+                questionContainers.forEach(container => {
+                    container.classList.remove('active');
+                });
+                
+                // Calculate rank
+                const rankResult = calculateRank();
+                
+                // Update results display
+                rankIcon.textContent = getRankIcon(rankResult.rank);
+                rankName.textContent = rankResult.rankName;
+                
+                // Show results
+                resultsCard.classList.add('active');
+                
+                // Scroll to results
+                resultsCard.scrollIntoView({ behavior: 'smooth' });
+                
+                // Save data automatically
+                saveBaselineData();
+                
+                // Update user profile with new rank
+                loadUserProfile();
+            }
+            
+            function restoreSelection(questionNum) {
+                const selection = userSelections[questionNum];
+                if (selection) {
+                    const option = document.querySelector(`[data-question="${questionNum}"][data-value="${selection.value}"]`);
+                    if (option) {
+                        option.classList.add('selected');
+                        
+                        // Enable next button
+                        const nextBtn = document.getElementById(`next${questionNum}`);
+                        if (nextBtn) {
+                            nextBtn.disabled = false;
+                        }
+                    }
+                }
+            }
+            
+            function updateProgress() {
+                const completed = Object.values(userSelections).filter(val => val !== null).length;
+                const percentage = (completed / totalQuestions) * 100;
+                
+                progressFill.style.width = `${percentage}%`;
+                progressPercentage.textContent = `${Math.round(percentage)}%`;
+            }
+            
+            function updateNavigationButtons() {
+                // Update all previous buttons
+                questions.forEach(q => {
+                    const prevBtn = document.getElementById(`prev${q}`);
+                    if (prevBtn) {
+                        if (q === 1) {
+                            prevBtn.classList.add('hidden');
+                        } else {
+                            prevBtn.classList.remove('hidden');
+                        }
+                    }
+                });
+                
+                // Update all next buttons based on selection
+                questions.forEach(q => {
+                    const nextBtn = document.getElementById(`next${q}`);
+                    if (nextBtn) {
+                        if (q === totalQuestions) {
+                            nextBtn.innerHTML = userSelections[q] ? 
+                                'Complete Setup <i class="fas fa-check-circle"></i>' :
+                                'Complete Setup <i class="fas fa-check-circle"></i>';
+                        }
+                        
+                        // Disable if no selection
+                        nextBtn.disabled = !userSelections[q];
+                    }
+                });
+            }
+            
+            function calculateRank() {
+                let score = 100; // Start with 100 points
+                
+                // Transport 1: Mode of transport
+                const transport1Score = {
+                    'walking': 0,
+                    'cycling': 5,
+                    'scooter': 10,
+                    'bus': 15,
+                    'train': 20,
+                    'car-shared': 25,
+                    'motorbike': 30,
+                    'car-own': 40
+                };
+                
+                // Transport 2: Distance
+                const transport2Score = {
+                    'very-local': 0,
+                    'short-trip': 5,
+                    'medium-commute': 10,
+                    'long-journey': 20
+                };
+                
+                // Food 1: Type of diet
+                const food1Score = {
+                    'plant-based': 0,
+                    'vegetarian': 10,
+                    'some-fish': 20,
+                    'some-meat': 30
+                };
+                
+                // Food 2: Meat frequency
+                const food2Score = {
+                    '0-1-days': 0,
+                    '2-3-days': 10,
+                    '4-5-days': 20,
+                    'most-days': 30
+                };
+                
+                // Energy 1: Comfort habits
+                const energy1Score = {
+                    'natural': 0,
+                    'fan': 5,
+                    'sometimes': 15,
+                    'most-day': 25
+                };
+                
+                // Energy 2: Device habits
+                const energy2Score = {
+                    'always-off': 0,
+                    'sometimes-on': 10,
+                    'usually-on': 20
+                };
+                
+                // Goods: Shopping habits
+                const goodsScore = {
+                    'buy-new': 30,
+                    'essentials': 10,
+                    'second-hand': 5,
+                    'no-buy': 0
+                };
+                
+                // Waste: Waste habits
+                const wasteScore = {
+                    'recycled': 0,
+                    'mixed': 15,
+                    'not-sure': 20
+                };
+                
+                // Reflection (doesn't affect score, just for user insight)
+                
+                // Calculate total score (lower is better)
+                if (userSelections[1]) score -= transport1Score[userSelections[1].value] || 0;
+                if (userSelections[2]) score -= transport2Score[userSelections[2].value] || 0;
+                if (userSelections[3]) score -= food1Score[userSelections[3].value] || 0;
+                if (userSelections[4]) score -= food2Score[userSelections[4].value] || 0;
+                if (userSelections[5]) score -= energy1Score[userSelections[5].value] || 0;
+                if (userSelections[6]) score -= energy2Score[userSelections[6].value] || 0;
+                if (userSelections[7]) score -= goodsScore[userSelections[7].value] || 0;
+                if (userSelections[8]) score -= wasteScore[userSelections[8].value] || 0;
+                
+                // Ensure score doesn't go below 0
+                score = Math.max(0, score);
+                
+                // Determine rank based on score
+                let rank, rankName;
+                
+                if (score >= 80) {
+                    rank = 5;
+                    rankName = "Eco Champion 🌟";
+                } else if (score >= 60) {
+                    rank = 4;
+                    rankName = "Green Guardian 🌿";
+                } else if (score >= 40) {
+                    rank = 3;
+                    rankName = "Sustainable Scout 🍃";
+                } else if (score >= 20) {
+                    rank = 2;
+                    rankName = "Conscious Citizen 💚";
+                } else {
+                    rank = 1;
+                    rankName = "Carbon Recruit 🔘";
+                }
+                
+                return {
+                    score: score,
+                    rank: rank,
+                    rankName: rankName,
+                    maxScore: 100
+                };
+            }
+            
+            function getRankIcon(rank) {
+                const icons = ['🔘', '💚', '🍃', '🌿', '🌟'];
+                return icons[rank - 1] || icons[0];
+            }
+            
+            function saveBaselineData() {
+                // Get current user from localStorage
+                const currentUserId = localStorage.getItem('currentUserId');
+                let users = JSON.parse(localStorage.getItem('users') || '{}');
+                
+                if (currentUserId && users[currentUserId]) {
+                    // Calculate final rank
+                    const rankResult = calculateRank();
+                    
+                    // Format selections for storage
+                    const formattedSelections = {};
+                    Object.keys(userSelections).forEach(key => {
+                        if (userSelections[key]) {
+                            formattedSelections[key] = userSelections[key];
+                        }
+                    });
+                    
+                    // Update user data with baseline
+                    users[currentUserId].baselineSet = true;
+                    users[currentUserId].userBaseline = {
+                        selections: formattedSelections,
+                        ecoScore: rankResult.score,
+                        rank: rankResult.rank,
+                        rankName: rankResult.rankName,
+                        setupDate: new Date().toISOString()
+                    };
+                    
+                    // Save updated user data
+                    localStorage.setItem('users', JSON.stringify(users));
+                    
+                    // Also save to currentUser for immediate access
+                    localStorage.setItem('currentUser', JSON.stringify(users[currentUserId]));
+                    
+                    console.log('Baseline saved successfully!');
+                } else {
+                    console.error('User not found in localStorage');
+                }
+            }
+            
+            // Demo: Auto-select some options for testing (remove in production)
+            setTimeout(() => {
+                const demoSelections = {
+                    1: 'cycling',
+                    2: 'short-trip',
+                    3: 'some-meat',
+                    4: '2-3-days',
+                    5: 'fan',
+                    6: 'always-off',
+                    7: 'essentials',
+                    8: 'recycled',
+                    9: 'food'
+                };
+                
+                // Auto-select if not already selected
+                Object.entries(demoSelections).forEach(([questionNum, value]) => {
+                    if (!userSelections[questionNum]) {
+                        const option = document.querySelector(`[data-question="${questionNum}"][data-value="${value}"]`);
+                        if (option) {
+                            option.click();
+                        }
+                    }
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>

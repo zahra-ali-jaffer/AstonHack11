@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Garden - Pocket Garden</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
+    :root {
+      --primary-green: #478778;
+      --light-green: #AFE1AF;
+      --accent-green: #AFE1AF;
+      --soft-green: #AFE1AF;
+      --dark-green: #097969;
+      --white: #ffffff;
+      --light-gray: #f5f5f5;
+      --dark-gray: #333333;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+    
+    body, html {
+      width: 100%;
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark-gray);
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      overflow-y: auto;
+    }
+    
+    /* Header - Fixed & Transparent */
+    header {
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: transparent;
+      transition: all 0.5s ease;
+    }
+    
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    /* Header background when in garden mode */
+    header.garden-mode {
+      background-color: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border-bottom: 3px solid var(--primary-green);
+    }
+    
+    header.scrolled {
+      background-color: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Dashboard-style header */
+    header.dashboard-style {
+      position: relative;
+      background-color: white;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+      margin-bottom: 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-icon {
+      font-size: 28px;
+      color: var(--primary-green);
+      margin-right: 10px;
+    }
+    
+    .logo-text {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary-green);
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    /* Sign In button for non-logged in users */
+    .sign-in-btn {
+      background-color: transparent;
+      border: 2px solid var(--primary-green);
+      color: var(--primary-green);
+      padding: 10px 25px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    
+    .sign-in-btn:hover {
+      background-color: var(--primary-green);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(71, 135, 120, 0.3);
+    }
+    
+    /* Nav buttons for logged in users */
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background-color: var(--light-gray);
+      border-radius: 50px;
+      text-decoration: none;
+      color: var(--dark-gray);
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-btn:hover {
+      background-color: var(--primary-green);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .nav-btn i {
+      font-size: 18px;
+    }
+    
+    /* User Profile */
+    .user-profile {
+      margin-left: 10px;
+    }
+    
+    .profile-circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--soft-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    
+    .profile-circle:hover {
+      transform: scale(1.05);
+    }
+    
+    .profile-placeholder {
+      font-size: 24px;
+    }
+    
+    .profile-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    
+    /* Profile Dropdown */
+    .profile-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 20px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      width: 280px;
+      z-index: 1000;
+      display: none;
+      overflow: hidden;
+    }
+    
+    .profile-dropdown.show {
+      display: block;
+    }
+    
+    .dropdown-header {
+      padding: 20px;
+      background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+      color: white;
+      text-align: center;
+    }
+    
+    .dropdown-profile-circle {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.2);
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    
+    .dropdown-profile-placeholder {
+      font-size: 32px;
+    }
+    
+    .dropdown-profile-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    
+    .dropdown-user-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .dropdown-user-email {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    
+    .dropdown-menu {
+      padding: 10px 0;
+    }
+    
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: var(--dark-gray);
+      transition: all 0.3s ease;
+    }
+    
+    .dropdown-item:hover {
+      background-color: var(--light-gray);
+      color: var(--primary-green);
+    }
+    
+    .dropdown-item i {
+      width: 20px;
+      text-align: center;
+    }
+    
+    .dropdown-divider {
+      height: 1px;
+      background-color: #eee;
+      margin: 10px 0;
+    }
+    
+    /* Garden Container */
+    .garden-container {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      background-color: transparent;
+    }
+    
+    #background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: all 3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+    
+    /* Welcome Screen - Positioned LOWER */
+    .welcome-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start; /* Changed from center to flex-start */
+      align-items: center;
+      background: none;
+      color: white;
+      text-align: center;
+      padding: 40px;
+      z-index: 10;
+      transition: opacity 2s ease;
+      padding-top: 150px; /* Increased padding for lower position */
+    }
+    
+    .welcome-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    /* Darker shadows behind welcome text */
+    .welcome-title {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 25px; /* Increased margin */
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 20px 45px; /* Increased padding */
+      border-radius: 15px;
+      backdrop-filter: blur(4px);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      transform: translateY(-70px); /* Pushed lower */
+    }
+    
+    .welcome-subtitle {
+      font-size: 22px;
+      margin-bottom: 35px; /* Increased margin */
+      max-width: 700px;
+      line-height: 1.6;
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 20px 35px;
+      border-radius: 10px;
+      backdrop-filter: blur(3px);
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+      transform: translateY(-80px); /* Pushed lower */
+    }
+    
+    .enter-btn {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: var(--primary-green);
+      border: none;
+      padding: 18px 40px;
+      border-radius: 50px;
+      font-size: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      margin-top: 20px;
+      transform: translateY(-120px); /* Pushed lower */
+    }
+    
+    .enter-btn:hover {
+      transform: translateY(-120px) scale(1.05); /* Adjusted for new position */
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      background-color: white;
+    }
+    
+    .enter-btn i {
+      font-size: 24px;
+    }
+    
+
+    /* Hint text with arrow positioned higher (closer to button) */
+    .hint-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px; /* Reduced margin */
+      gap: 5px; /* Reduced gap */
+      transform: translateY(-120px); /* Pushed lower */
+    }
+    
+    .hint-text {
+      font-size: 16px;
+      opacity: 0.9;
+      font-style: italic;
+      padding: 8px 20px;
+      border-radius: 8px;
+      background-color: rgba(0, 0, 0, 0.2);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(2px);
+    }
+    
+    /* Bouncing Arrow - positioned higher (closer to text) */
+    .bouncing-arrow {
+      font-size: 32px;
+      color: white;
+      animation: bounceNew 2s infinite;
+      z-index: 11;
+      opacity: 0.9;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+      cursor: pointer;
+      margin-top: 0; /* Removed margin */
+    }
+    
+    .bouncing-arrow.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    @keyframes bounceNew {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-8px); /* Reduced bounce height */
+      }
+      60% {
+        transform: translateY(-4px); /* Reduced bounce height */
+      }
+    }
+    
+    /* Floating Plants */
+    .floating-plant {
+      position: absolute;
+      font-size: 45px;
+      opacity: 0.9;
+      filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+      animation: float 8s ease-in-out infinite;
+      z-index: 2;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .floating-plant.rose {
+      animation: floatRose 9s ease-in-out infinite;
+    }
+    
+    .floating-plant.lily {
+      animation: floatLily 7s ease-in-out infinite;
+    }
+    
+    .floating-plant.sunflower {
+      animation: floatSunflower 10s ease-in-out infinite;
+    }
+    
+    .floating-plant.tulip {
+      animation: floatTulip 8s ease-in-out infinite;
+    }
+    
+    .floating-plant:hover {
+      transform: scale(1.2);
+      filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.4));
+      z-index: 10;
+    }
+    
+    @keyframes float {
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg) scale(1); 
+      }
+      25% { 
+        transform: translateY(-25px) rotate(-5deg) scale(1.05); 
+      }
+      50% { 
+        transform: translateY(-40px) rotate(5deg) scale(1.1); 
+      }
+      75% { 
+        transform: translateY(-15px) rotate(-3deg) scale(1.05); 
+      }
+    }
+    
+    @keyframes floatRose {
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg) scale(1); 
+      }
+      30% { 
+        transform: translateY(-30px) rotate(-8deg) scale(1.08); 
+      }
+      60% { 
+        transform: translateY(-45px) rotate(8deg) scale(1.12); 
+      }
+    }
+    
+    @keyframes floatLily {
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg) scale(1); 
+      }
+      33% { 
+        transform: translateY(-20px) rotate(10deg) scale(1.06); 
+      }
+      66% { 
+        transform: translateY(-35px) rotate(-10deg) scale(1.09); 
+      }
+    }
+    
+    @keyframes floatSunflower {
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg) scale(1); 
+      }
+      25% { 
+        transform: translateY(-35px) rotate(12deg) scale(1.1); 
+      }
+      50% { 
+        transform: translateY(-50px) rotate(-12deg) scale(1.15); 
+      }
+      75% { 
+        transform: translateY(-25px) rotate(6deg) scale(1.05); 
+      }
+    }
+    
+    @keyframes floatTulip {
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg) scale(1); 
+      }
+      40% { 
+        transform: translateY(-28px) rotate(-15deg) scale(1.07); 
+      }
+      80% { 
+        transform: translateY(-15px) rotate(15deg) scale(1.04); 
+      }
+    }
+    
+    /* Plant Popups */
+    .plant-popup {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.98);
+      padding: 12px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+      font-size: 13px;
+      display: none;
+      max-width: 200px;
+      min-width: 180px;
+      z-index: 5;
+      border-left: 3px solid var(--primary-green);
+      transform: translateY(20px) scale(0.95);
+      opacity: 0;
+      transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: visible;
+      word-wrap: break-word;
+      backdrop-filter: blur(8px);
+      pointer-events: auto;
+    }
+    
+    .plant-popup.visible {
+      display: block;
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    
+    .plant-popup strong {
+      color: var(--dark-green);
+      font-size: 15px;
+      margin-bottom: 6px;
+      display: block;
+      font-family: 'Quicksand', sans-serif;
+      line-height: 1.3;
+    }
+    
+    /* Community Section */
+    .community-section {
+      background: linear-gradient(135deg, #f8fff8 0%, #f0f9f0 100%);
+      padding: 80px 0 100px;
+      position: relative;
+      overflow: hidden;
+      border-top: none;
+      margin-top: -1px;
+    }
+    
+    .community-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #AFE1AF, #478778, #AFE1AF);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .section-title {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 36px;
+      color: var(--dark-green);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    .section-title i {
+      font-size: 32px;
+      color: var(--primary-green);
+    }
+    
+    .section-subtitle {
+      font-size: 18px;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    
+    /* Plants Slider */
+    .plants-slider {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto 50px;
+      padding: 0 50px;
+    }
+    
+    .slider-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid var(--primary-green);
+      color: var(--primary-green);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .slider-nav:hover {
+      background: var(--primary-green);
+      color: white;
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 6px 20px rgba(71, 135, 120, 0.3);
+    }
+    
+    .slider-nav.prev {
+      left: 0;
+    }
+    
+    .slider-nav.next {
+      right: 0;
+    }
+    
+    .slider-container {
+      display: flex;
+      gap: 25px;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      padding: 20px 10px;
+      border-radius: 20px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    .slider-container::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* Plant Card */
+    .plant-card {
+      flex: 0 0 calc(25% - 20px);
+      background: white;
+      border-radius: 15px;
+      overflow: visible;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      transition: all 0.4s ease;
+      border: 2px dashed var(--light-green);
+      position: relative;
+      min-height: 350px;
+    }
+    
+    .plant-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      border-color: var(--primary-green);
+    }
+    
+    .plant-emoji {
+      font-size: 70px;
+      text-align: center;
+      padding: 30px 0 20px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .plant-content {
+      padding: 25px;
+      background: #f9fdf9;
+      border-top: 1px solid #eee;
+      min-height: 230px;
+
+    }
+    
+    .plant-name {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 24px;
+      color: var(--dark-green);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    
+    .planter-info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      color: #666;
+      font-size: 15px;
+    }
+    
+    .planter-info i {
+      color: var(--primary-green);
+    }
+    
+    .plant-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 0 15px;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-weight: 600;
+      font-size: 20px;
+      color: var(--dark-green);
+    }
+    
+    .stat-label {
+      font-size: 13px;
+      color: #888;
+      margin-top: 4px;
+    }
+    
+    .impact-tag {
+      display: inline-block;
+      background: rgba(175, 225, 175, 0.3);
+      color: var(--dark-green);
+      font-size: 13px;
+      padding: 6px 15px;
+      border-radius: 20px;
+      margin-top: 15px;
+      font-weight: 500;
+      width: 100%;
+      text-align: center;
+    }
+    
+    /* Name Tag */
+    .name-tag {
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary-green);
+      color: white;
+      padding: 8px 25px;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(71, 135, 120, 0.3);
+      white-space: nowrap;
+      z-index: 2;
+    }
+    
+    .name-tag::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid var(--primary-green);
+    }
+    
+    /* Slider Dots */
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+    }
+    
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ddd;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .dot.active {
+      background: var(--primary-green);
+      transform: scale(1.2);
+    }
+    
+    /* Community Stats */
+    .community-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 50px;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .stat-card i {
+      font-size: 40px;
+      color: var(--primary-green);
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(175, 225, 175, 0.2);
+      border-radius: 50%;
+    }
+    
+    .stat-content h3 {
+      font-size: 32px;
+      color: var(--dark-green);
+      margin-bottom: 5px;
+      font-family: 'Quicksand', sans-serif;
+    }
+    
+    .stat-content p {
+      color: #666;
+      font-size: 14px;
+    }
+    
+    /* Extra Emojis */
+    .extra-emoji {
+      position: absolute;
+      font-size: 30px;
+      opacity: 0.7;
+      filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.2));
+      animation: drift 15s linear infinite;
+      z-index: 1;
+    }
+    
+    @keyframes drift {
+      0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.7;
+      }
+      50% {
+        transform: translate(100px, -50px) rotate(180deg) scale(0.8);
+        opacity: 0.4;
+      }
+      100% {
+        transform: translate(0, 0) rotate(360deg) scale(1);
+        opacity: 0.7;
+      }
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+      .plant-card {
+        flex: 0 0 calc(33.333% - 20px);
+        min-height: 340px;
+      }
+      
+      .plant-emoji {
+        font-size: 65px;
+        height: 110px;
+      }
+      
+      .plant-content {
+        min-height: 220px;
+        padding: 20px;
+      }
+      
+      .section-title {
+        font-size: 32px;
+      }
+      
+      .community-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .welcome-title {
+        font-size: 36px;
+        padding: 15px 30px;
+        transform: translateY(30px);
+      }
+      
+      .welcome-subtitle {
+        font-size: 18px;
+        padding: 15px 25px;
+        transform: translateY(30px);
+      }
+      
+      .enter-btn {
+        padding: 15px 30px;
+        font-size: 18px;
+        transform: translateY(30px);
+      }
+      
+      .hint-container {
+        transform: translateY(30px);
+      }
+      
+      .hint-text {
+        font-size: 14px;
+      }
+      
+      .plant-popup {
+        max-width: 170px;
+        min-width: 150px;
+        padding: 10px;
+        font-size: 12px;
+      }
+      
+      .plant-popup strong {
+        font-size: 14px;
+      }
+      
+      .floating-plant {
+        font-size: 35px;
+      }
+      
+      .extra-emoji {
+        font-size: 24px;
+      }
+      
+      .sign-in-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+      
+      .logo-text {
+        font-size: 26px;
+      }
+      
+      .bouncing-arrow {
+        font-size: 28px;
+      }
+      
+      .hint-container {
+        margin-top: 15px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .plant-card {
+        flex: 0 0 calc(50% - 20px);
+        min-height: 330px;
+      }
+      
+      .plants-slider {
+        padding: 0 40px;
+      }
+      
+      .slider-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+      
+      .section-title {
+        font-size: 28px;
+      }
+      
+      .section-subtitle {
+        font-size: 16px;
+        padding: 0 20px;
+      }
+      
+      .plant-name {
+        font-size: 22px;
+      }
+      
+      .plant-emoji {
+        font-size: 60px;
+        height: 100px;
+      }
+      
+      .plant-content {
+        min-height: 210px;
+      }
+      
+      .bouncing-arrow {
+        font-size: 24px;
+      }
+      
+      .hint-container {
+        margin-top: 10px;
+      }
+      
+      .welcome-screen {
+        padding-top: 120px;
+      }
+      
+      .welcome-title, 
+      .welcome-subtitle,
+      .enter-btn,
+      .hint-container {
+        transform: translateY(20px);
+      }
+      
+      /* Responsive for dashboard-style header */
+      .header-container {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .header-actions {
+        justify-content: center;
+        width: 100%;
+      }
+      
+      .nav-btn span {
+        display: none;
+      }
+      
+      .nav-btn {
+        padding: 10px;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .plant-card {
+        flex: 0 0 100%;
+        min-height: 320px;
+      }
+      
+      .community-stats {
+        grid-template-columns: 1fr;
+      }
+      
+      .section-title {
+        font-size: 24px;
+      }
+      
+      .plant-name {
+        font-size: 20px;
+      }
+      
+      .community-section {
+        padding: 60px 0 80px;
+      }
+      
+      .plant-popup {
+        max-width: 150px;
+        min-width: 130px;
+        padding: 8px;
+        font-size: 11px;
+      }
+      
+      .plant-popup strong {
+        font-size: 13px;
+      }
+      
+      .hint-text {
+        font-size: 13px;
+        padding: 8px 15px;
+      }
+      
+      .floating-plant {
+        font-size: 30px;
+      }
+      
+      .extra-emoji {
+        font-size: 20px;
+      }
+      
+      .plant-emoji {
+        font-size: 55px;
+        height: 90px;
+      }
+      
+      .plant-content {
+        min-height: 200px;
+        padding: 18px;
+      }
+      
+      .bouncing-arrow {
+        font-size: 22px;
+      }
+      
+      .hint-container {
+        margin-top: 8px;
+      }
+      
+      .welcome-title {
+        font-size: 28px;
+        padding: 12px 20px;
+        transform: translateY(15px);
+      }
+      
+      .welcome-subtitle {
+        font-size: 16px;
+        padding: 12px 20px;
+        transform: translateY(15px);
+      }
+      
+      .enter-btn {
+        transform: translateY(15px);
+      }
+      
+      .hint-container {
+        transform: translateY(15px);
+      }
+      
+      .sign-in-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+      }
+      
+      .logo-text {
+        font-size: 22px;
+      }
+      
+      .logo-icon {
+        font-size: 24px;
+      }
+      
+      .header-actions {
+        gap: 8px;
+      }
+      
+      .welcome-screen {
+        padding-top: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Header - Will be dynamically updated based on login status -->
+  <header id="mainHeader">
+    <div class="header-container">
+      <div class="logo">
+        <div class="logo-icon">🌱</div>
+        <div class="logo-text">Pocket Garden</div>
+      </div>
+
+      <!-- Default header for non-logged in users -->
+      <nav class="header-actions" id="defaultHeaderActions">
+        <a href="index.html" style="text-decoration: none;">
+          <button class="sign-in-btn">
+            <i class="fas fa-home"></i> Home
+          </button>
+        </a>
+
+        <a href="login.html" style="text-decoration: none;">
+          <button class="sign-in-btn">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+          </button>
+        </a>
+      </nav>
+
+      <!-- Dashboard-style header for logged in users -->
+      <nav class="header-actions" id="dashboardHeaderActions" style="display: none;">
+        <a href="dashboard.html" class="nav-btn">
+          <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
+        </a>
+        <a href="community.html" class="nav-btn">
+          <i class="fas fa-users"></i> <span>Community</span>
+        </a>
+        <a href="html.html" class="nav-btn">
+          <i class="fas fa-seedling"></i> <span>Your Garden</span>
+        </a>
+        
+        <div class="user-profile">
+          <div class="profile-circle" id="profileCircle">
+            <div class="profile-placeholder" id="profilePlaceholder">🐙</div>
+            <img id="profileImage" class="profile-image" style="display: none;" alt="Profile Icon">
+          </div>
+        </div>
+      </nav>
+    </div>
+    
+    <!-- Profile Dropdown for logged in users -->
+    <div class="profile-dropdown" id="profileDropdown">
+      <div class="dropdown-header">
+        <div class="dropdown-profile-circle" id="dropdownProfileCircle">
+          <div class="dropdown-profile-placeholder" id="dropdownProfilePlaceholder">🐙</div>
+          <img id="dropdownProfileImage" class="dropdown-profile-image" style="display: none;" alt="Profile Icon">
+        </div>
+        <div class="dropdown-user-name" id="dropdownUserName">User Name</div>
+        <div class="dropdown-user-email" id="dropdownUserEmail">user@example.com</div>
+      </div>
+      <div class="dropdown-menu">
+        <a href="profile.html" class="dropdown-item">
+          <i class="fas fa-user"></i> My Profile
+        </a>
+        <a href="dashboard.html" class="dropdown-item">
+          <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        <a href="html.html" class="dropdown-item">
+          <i class="fas fa-seedling"></i> Your Garden
+        </a>
+        <a href="baseline.html" class="dropdown-item">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="index.html" class="dropdown-item" id="logoutBtn">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Community Garden Container -->
+  <div class="garden-container">
+    
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+      <h1 class="welcome-title">Welcome to the Community Garden</h1>
+      <p class="welcome-subtitle">
+        Explore the collective efforts of our gardening community. Each plant represents someone's sustainable journey. 
+      </p>
+      <button class="enter-btn" id="enterGardenBtn">
+        <i class="fas fa-seedling"></i> Enter the Garden
+      </button>
+      
+      <!-- Hint text with arrow positioned higher -->
+      <div class="hint-container">
+        <p class="hint-text">Click to discover inspiring stories of growth and positive impact</p>
+        <div class="bouncing-arrow" id="bouncingArrow">
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Background Canvas -->
+    <div id="background"></div>
+    
+  </div>
+
+  <!-- Community Members Plants Section -->
+  <section class="community-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fas fa-users"></i> Community Gardeners
+        </h2>
+        <p class="section-subtitle">Meet our community members and their beautiful plants</p>
+      </div>
+
+      <div class="plants-slider">
+        <!-- Slider Navigation -->
+        <button class="slider-nav prev">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="slider-nav next">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <!-- Slider Container -->
+        <div class="slider-container">
+          <!-- Plant Cards will be dynamically generated here -->
+        </div>
+        
+        <!-- Dots Indicator -->
+        <div class="slider-dots"></div>
+      </div>
+      
+      <div class="community-stats">
+        <div class="stat-card">
+          <i class="fas fa-leaf"></i>
+          <div class="stat-content">
+            <h3>124</h3>
+            <p>Plants Planted</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-user-friends"></i>
+          <div class="stat-content">
+            <h3>67</h3>
+            <p>Active Gardeners</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-tint"></i>
+          <div class="stat-content">
+            <h3>2,450L</h3>
+            <p>Water Saved</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-cloud"></i>
+          <div class="stat-content">
+            <h3>380kg</h3>
+            <p>CO₂ Offset</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Check login status and update header
+    document.addEventListener('DOMContentLoaded', function() {
+      const mainHeader = document.getElementById('mainHeader');
+      const defaultHeaderActions = document.getElementById('defaultHeaderActions');
+      const dashboardHeaderActions = document.getElementById('dashboardHeaderActions');
+      const profileDropdown = document.getElementById('profileDropdown');
+      
+      // Check if user is logged in
+      const currentUserId = localStorage.getItem('currentUserId');
+      let users = JSON.parse(localStorage.getItem('users') || '{}');
+      let currentUser = users[currentUserId] || null;
+      
+      if (currentUser) {
+        // User is logged in - show dashboard-style header
+        mainHeader.classList.add('dashboard-style');
+        mainHeader.classList.remove('scrolled');
+        defaultHeaderActions.style.display = 'none';
+        dashboardHeaderActions.style.display = 'flex';
+        
+        // Update profile information
+        updateProfileInformation(currentUser);
+        
+        // Setup profile dropdown functionality
+        setupProfileDropdown();
+      } else {
+        // User is not logged in - show default header
+        mainHeader.classList.remove('dashboard-style');
+        dashboardHeaderActions.style.display = 'none';
+        defaultHeaderActions.style.display = 'flex';
+        
+        // Set fixed header for non-logged in users
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 50) {
+            mainHeader.classList.add('scrolled');
+          } else {
+            mainHeader.classList.remove('scrolled');
+          }
+        });
+      }
+      
+      function updateProfileInformation(user) {
+        // Update profile pictures
+        const profilePlaceholder = document.getElementById('profilePlaceholder');
+        const profileImage = document.getElementById('profileImage');
+        const dropdownProfilePlaceholder = document.getElementById('dropdownProfilePlaceholder');
+        const dropdownProfileImage = document.getElementById('dropdownProfileImage');
+        
+        if (user.profileIcon && user.profileIcon.endsWith('.png')) {
+          profilePlaceholder.style.display = 'none';
+          profileImage.src = user.profileIcon;
+          profileImage.style.display = 'block';
+          
+          dropdownProfilePlaceholder.style.display = 'none';
+          dropdownProfileImage.src = user.profileIcon;
+          dropdownProfileImage.style.display = 'block';
+        } else {
+          profilePlaceholder.textContent = user.profileIcon || '👤';
+          dropdownProfilePlaceholder.textContent = user.profileIcon || '👤';
+        }
+        
+        // Update user info in dropdown
+        document.getElementById('dropdownUserName').textContent = user.name || 'Gardener';
+        document.getElementById('dropdownUserEmail').textContent = user.email || 'user@example.com';
+      }
+      
+      function setupProfileDropdown() {
+        const profileCircle = document.getElementById('profileCircle');
+        
+        profileCircle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          profileDropdown.classList.toggle('show');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+          profileDropdown.classList.remove('show');
+        });
+        
+        // Prevent dropdown from closing when clicking inside it
+        profileDropdown.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
+        
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+          e.preventDefault();
+          localStorage.removeItem('currentUserId');
+          window.location.href = 'index.html';
+        });
+      }
+      
+      // Update welcome screen position to account for header
+      function updateWelcomeScreenPosition() {
+        const headerHeight = mainHeader.offsetHeight;
+        document.getElementById('welcomeScreen').style.paddingTop = `${headerHeight + 80}px`;
+      }
+      
+      // Call on load and resize
+      window.addEventListener('load', updateWelcomeScreenPosition);
+      window.addEventListener('resize', updateWelcomeScreenPosition);
+    });
+    
+    // Garden functionality
+    const background = document.getElementById('background');
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const enterGardenBtn = document.getElementById('enterGardenBtn');
+    const bouncingArrow = document.getElementById('bouncingArrow');
+    
+    let gardenState = 'intro';
+    let popupPositions = [];
+    let popupInterval;
+    
+    // Initial background - hackathon.png at 0.5 opacity
+    background.style.backgroundImage = "url('hackathon.png')";
+    background.style.opacity = '0.5'; // Start at 50% opacity
+    background.style.filter = 'brightness(1)';
+    
+    // Plant data
+    const plants = [
+      {
+        name: "Lily Serenity",
+        score: 28,
+        points: 500,
+        plantedBy: "Alex",
+        impact: "Water saved: 300L",
+        x: "15%",
+        y: "20%",
+        emoji: "🌸",
+        color: "#FFB6C1",
+        id: 1,
+        type: "lily"
+      },
+      {
+        name: "Rose Resilience",
+        score: 15,
+        points: 200,
+        plantedBy: "Jamie",
+        impact: "Plastic reduced: 8kg",
+        x: "85%",
+        y: "25%",
+        emoji: "🌹",
+        color: "#DC143C",
+        id: 2,
+        type: "rose"
+      },
+      {
+        name: "Sunflower Sunshine",
+        score: 42,
+        points: 850,
+        plantedBy: "Taylor",
+        impact: "CO2 offset: 45kg",
+        x: "25%",
+        y: "30%",
+        emoji: "🌻",
+        color: "#FFD700",
+        id: 3,
+        type: "sunflower"
+      },
+      {
+        name: "Tulip Harmony",
+        score: 23,
+        points: 350,
+        plantedBy: "Riley",
+        impact: "Energy saved: 15kWh",
+        x: "75%",
+        y: "35%",
+        emoji: "🌷",
+        color: "#DA70D6",
+        id: 4,
+        type: "tulip"
+      }
+    ];
+    
+    // Additional emojis for more animation
+    const extraEmojis = ["🌿", "🍃", "🌱", "💐", "🌼", "🌺", "🌾", "🥀", "🪴"];
+    
+    // Enter Garden Button Click
+    enterGardenBtn.addEventListener('click', enterGarden);
+    
+    // Also make the arrow clickable
+    bouncingArrow.addEventListener('click', enterGarden);
+    
+    function enterGarden() {
+      if (gardenState === 'intro') {
+        gardenState = 'garden';
+        
+        // For non-logged in users, add garden mode to header
+        const mainHeader = document.getElementById('mainHeader');
+        const currentUserId = localStorage.getItem('currentUserId');
+        
+        if (!currentUserId) {
+          mainHeader.classList.add('garden-mode');
+        }
+        
+        // Hide the bouncing arrow
+        if (bouncingArrow) {
+          bouncingArrow.classList.add('hidden');
+        }
+        
+        // Animate welcome screen out with longer fade
+        welcomeScreen.classList.add('hidden');
+        
+        // First, fade hackathon.png to full opacity (1.0)
+        setTimeout(() => {
+          background.style.opacity = '1';
+          
+          // Wait for the fade to complete, then transition to garden.png
+          setTimeout(() => {
+            background.style.backgroundImage = "url('garden.png')";
+            
+            // Auto-show popups after background transition completes
+            setTimeout(() => {
+              showInitialPopups();
+              createFloatingPlants();
+              createExtraEmojis();
+              
+              // Set up interval to cycle through popups
+              startPopupCycle();
+            }, 1000);
+          }, 1000); // Wait for opacity transition
+        }, 800);
+      }
+    }
+    
+    function showInitialPopups() {
+      // Clear any existing popups
+      document.querySelectorAll('.plant-popup').forEach(popup => {
+        popup.classList.remove('visible');
+        setTimeout(() => popup.remove(), 700);
+      });
+      
+      // Reset popup positions tracking
+      popupPositions = [];
+      
+      // Show all popups automatically
+      plants.forEach((plant, index) => {
+        setTimeout(() => {
+          createPlantPopup(plant, index);
+        }, 500 + (index * 600));
+      });
+    }
+    
+    function createPlantPopup(plant, index) {
+      const popup = document.createElement('div');
+      popup.className = 'plant-popup';
+      popup.dataset.id = plant.id;
+      
+      // Calculate position
+      let left = parseFloat(plant.x);
+      let top = parseFloat(plant.y);
+      
+      // Adjust to ensure popups are in top half of screen
+      if (top > 50) {
+        top = 20 + (index * 10);
+      }
+      
+      // Convert percentages to viewport pixels
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      
+      const popupWidth = 200;
+      const popupHeight = 120;
+      const padding = 25;
+      
+      // Adjust positioning to avoid overlap
+      let adjusted = adjustPositionForOverlap(left, top, popupWidth, popupHeight, padding, index);
+      
+      // Set final position
+      popup.style.left = `${adjusted.left}%`;
+      popup.style.top = `${adjusted.top}%`;
+      
+      // Store this popup's position
+      popupPositions.push({
+        left: adjusted.left,
+        top: adjusted.top,
+        width: popupWidth / viewportWidth * 100,
+        height: popupHeight / viewportHeight * 100
+      });
+      
+      popup.innerHTML = `
+        <strong>${plant.emoji} ${plant.name}</strong>
+        <div>Score: <span class="score">${plant.score}</span> | Points: <span class="points">${plant.points}</span></div>
+        <div class="planter">Planted by: ${plant.plantedBy}</div>
+        <div class="impact">${plant.impact}</div>
+      `;
+      
+      document.querySelector('.garden-container').appendChild(popup);
+      
+      // Animate popup in
+      setTimeout(() => {
+        popup.classList.add('visible');
+      }, 100);
+      
+      // Auto-hide popup after some time
+      setTimeout(() => {
+        popup.classList.remove('visible');
+        setTimeout(() => {
+          if (popup.parentNode) {
+            popup.remove();
+          }
+        }, 700);
+      }, 8000 + (index * 1000));
+    }
+    
+    function createFloatingPlants() {
+      // Clear existing floating plants
+      document.querySelectorAll('.floating-plant').forEach(plant => plant.remove());
+      
+      // Create main floating plants with specific animations
+      plants.forEach(plant => {
+        const floatingPlant = document.createElement('div');
+        floatingPlant.className = `floating-plant ${plant.type}`;
+        floatingPlant.style.left = plant.x;
+        floatingPlant.style.top = plant.y;
+        floatingPlant.style.color = plant.color;
+        floatingPlant.textContent = plant.emoji;
+        floatingPlant.style.fontSize = '45px';
+        floatingPlant.style.animationDelay = Math.random() * 2 + 's';
+        floatingPlant.style.zIndex = '2';
+        floatingPlant.title = `Click to focus on ${plant.name}`;
+        
+        // Add click to highlight corresponding popup
+        floatingPlant.addEventListener('click', () => {
+          highlightPlantPopup(plant.id);
+        });
+        
+        document.querySelector('.garden-container').appendChild(floatingPlant);
+      });
+      
+      // Add more floating plants for animation
+      for (let i = 0; i < 6; i++) {
+        setTimeout(() => {
+          const extraPlant = document.createElement('div');
+          extraPlant.className = 'floating-plant';
+          extraPlant.textContent = plants[i % plants.length].emoji;
+          extraPlant.style.left = `${10 + (i * 15)}%`;
+          extraPlant.style.top = `${60 + Math.random() * 30}%`;
+          extraPlant.style.color = plants[i % plants.length].color;
+          extraPlant.style.fontSize = `${30 + Math.random() * 20}px`;
+          extraPlant.style.opacity = '0.7';
+          extraPlant.style.animationDelay = `${i * 0.5}s`;
+          extraPlant.style.zIndex = '1';
+          document.querySelector('.garden-container').appendChild(extraPlant);
+        }, i * 300);
+      }
+    }
+    
+    function createExtraEmojis() {
+      // Clear existing extra emojis
+      document.querySelectorAll('.extra-emoji').forEach(emoji => emoji.remove());
+      
+      // Create drifting emojis for background animation
+      for (let i = 0; i < 12; i++) {
+        const emoji = document.createElement('div');
+        emoji.className = 'extra-emoji';
+        emoji.textContent = extraEmojis[Math.floor(Math.random() * extraEmojis.length)];
+        emoji.style.left = `${Math.random() * 100}%`;
+        emoji.style.top = `${Math.random() * 100}%`;
+        emoji.style.fontSize = `${20 + Math.random() * 25}px`;
+        emoji.style.opacity = `${0.3 + Math.random() * 0.4}`;
+        emoji.style.animationDuration = `${10 + Math.random() * 20}s`;
+        emoji.style.animationDelay = `${Math.random() * 5}s`;
+        emoji.style.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+        document.querySelector('.garden-container').appendChild(emoji);
+      }
+    }
+    
+    function adjustPositionForOverlap(left, top, width, height, padding, currentIndex) {
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      
+      // Convert to pixels
+      const leftPx = (left / 100) * viewportWidth;
+      const topPx = (top / 100) * viewportHeight;
+      const widthPx = width;
+      const heightPx = height;
+      const paddingPx = padding;
+      
+      // Try positions with preference for top area
+      const positionsToTry = [
+        { left: left, top: Math.max(10, top - 5) },
+        { left: Math.max(5, left - 10), top: Math.max(10, top - 5) },
+        { left: Math.min(95, left + 10), top: Math.max(10, top - 5) },
+        { left: left, top: Math.max(10, top) },
+        { left: Math.max(5, left - 15), top: Math.max(10, top) },
+        { left: Math.min(95, left + 15), top: Math.max(10, top) },
+        { left: left, top: Math.max(10, top + 10) },
+      ];
+      
+      // Try each position
+      for (let position of positionsToTry) {
+        let overlaps = false;
+        
+        // Check against existing popups
+        for (let i = 0; i < currentIndex; i++) {
+          const existing = popupPositions[i];
+          
+          const existingLeftPx = (existing.left / 100) * viewportWidth;
+          const existingTopPx = (existing.top / 100) * viewportHeight;
+          const existingWidthPx = (existing.width / 100) * viewportWidth;
+          const existingHeightPx = (existing.height / 100) * viewportHeight;
+          
+          const currentLeftPx = (position.left / 100) * viewportWidth;
+          const currentTopPx = (position.top / 100) * viewportHeight;
+          
+          const horizontalOverlap = 
+            currentLeftPx < existingLeftPx + existingWidthPx + paddingPx &&
+            currentLeftPx + widthPx + paddingPx > existingLeftPx;
+            
+          const verticalOverlap = 
+            currentTopPx < existingTopPx + existingHeightPx + paddingPx &&
+            currentTopPx + heightPx + paddingPx > existingTopPx;
+          
+          if (horizontalOverlap && verticalOverlap) {
+            overlaps = true;
+            break;
+          }
+        }
+        
+        // Check if within bounds (prefer top area)
+        const isWithinBounds = 
+          position.left >= 5 && 
+          position.left <= 95 &&
+          position.top >= 10 && 
+          position.top <= 50;
+        
+        if (!overlaps && isWithinBounds) {
+          return position;
+        }
+      }
+      
+      // Fallback: distribute in a grid at the top
+      const row = Math.floor(currentIndex / 2);
+      const col = currentIndex % 2;
+      
+      return {
+        left: 20 + (col * 60),
+        top: 15 + (row * 20)
+      };
+    }
+    
+    function startPopupCycle() {
+      // Clear any existing interval
+      if (popupInterval) clearInterval(popupInterval);
+      
+      // Cycle through showing popups automatically
+      popupInterval = setInterval(() => {
+        if (gardenState === 'garden') {
+          // Randomly show one popup
+          const randomPlant = plants[Math.floor(Math.random() * plants.length)];
+          createPlantPopup(randomPlant, 0);
+        }
+      }, 10000);
+    }
+    
+    function highlightPlantPopup(plantId) {
+      // Find and highlight the corresponding popup
+      const popup = document.querySelector(`.plant-popup[data-id="${plantId}"]`);
+      if (popup) {
+        // Add highlight effect
+        popup.style.boxShadow = '0 0 0 3px rgba(71, 135, 120, 0.5), 0 10px 25px rgba(0, 0, 0, 0.2)';
+        popup.style.transform = 'scale(1.05)';
+        
+        // Remove highlight after 2 seconds
+        setTimeout(() => {
+          popup.style.boxShadow = '';
+          popup.style.transform = '';
+        }, 2000);
+      }
+    }
+    
+    // Keyboard shortcut for accessibility
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        if (gardenState === 'intro') {
+          enterGarden();
+        }
+      }
+      if (e.key === 'Escape') {
+        // Remove all popups
+        document.querySelectorAll('.plant-popup').forEach(popup => {
+          popup.classList.remove('visible');
+          setTimeout(() => popup.remove(), 700);
+        });
+        // Clear popup cycle
+        if (popupInterval) clearInterval(popupInterval);
+        popupPositions = [];
+      }
+    });
+    
+    // Auto-enter garden after 8 seconds
+    setTimeout(() => {
+      if (gardenState === 'intro') {
+        enterGardenBtn.style.animation = 'pulse 1.5s infinite';
+      }
+    }, 8000);
+    
+    // Community Slider Functionality
+    const communityPlants = [
+      { 
+        name: "Gold Sunshine", 
+        planter: "Alex Green", 
+        emoji: "🌻", 
+        score: 42, 
+        points: 850, 
+        impact: "CO₂ Offset: 45kg",
+        color: "#FFD700"
+      },
+      { 
+        name: "Velvet Rose", 
+        planter: "Maya Rivera", 
+        emoji: "🌹", 
+        score: 15, 
+        points: 200, 
+        impact: "Plastic Reduced: 8kg",
+        color: "#DC143C"
+      },
+      { 
+        name: "Blossom Lily", 
+        planter: "Sam Chen", 
+        emoji: "🌸", 
+        score: 28, 
+        points: 500, 
+        impact: "Water Saved: 300L",
+        color: "#FFB6C1"
+      },
+      { 
+        name: "Spring Tulip", 
+        planter: "Jordan Lee", 
+        emoji: "🌷", 
+        score: 23, 
+        points: 350, 
+        impact: "Energy Saved: 15kWh",
+        color: "#DA70D6"
+      },
+      { 
+        name: "Sunny Bloom", 
+        planter: "Taylor Wells", 
+        emoji: "🌻", 
+        score: 35, 
+        points: 600, 
+        impact: "Water Saved: 500L",
+        color: "#FFD700"
+      },
+      { 
+        name: "Crimson Rose", 
+        planter: "Casey Kim", 
+        emoji: "🌹", 
+        score: 31, 
+        points: 550, 
+        impact: "Air Purified: 85m³",
+        color: "#DC143C"
+      },
+      { 
+        name: "Petal Lily", 
+        planter: "Riley Jones", 
+        emoji: "🌸", 
+        score: 19, 
+        points: 280, 
+        impact: "Oxygen Produced: 12kg",
+        color: "#FFB6C1"
+      },
+      { 
+        name: "Violet Tulip", 
+        planter: "Morgan Park", 
+        emoji: "🌷", 
+        score: 47, 
+        points: 920, 
+        impact: "CO₂ Offset: 60kg",
+        color: "#DA70D6"
+      }
+    ];
+
+    // Initialize the community slider
+    document.addEventListener('DOMContentLoaded', function() {
+      const sliderContainer = document.querySelector('.slider-container');
+      const sliderDots = document.querySelector('.slider-dots');
+      const prevBtn = document.querySelector('.slider-nav.prev');
+      const nextBtn = document.querySelector('.slider-nav.next');
+      
+      let currentSlide = 0;
+      
+      // Generate plant cards
+      communityPlants.forEach((plant, index) => {
+        const card = document.createElement('div');
+        card.className = 'plant-card';
+        card.innerHTML = `
+          <div class="plant-emoji" style="color: ${plant.color}">${plant.emoji}</div>
+          <div class="plant-content">
+            <h3 class="plant-name">${plant.name}</h3>
+            <div class="planter-info">
+              <i class="fas fa-user"></i>
+              <span>${plant.planter}</span>
+            </div>
+            <div class="plant-stats">
+              <div class="stat">
+                <div class="stat-value">${plant.score}</div>
+                <div class="stat-label">Score</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">${plant.points}</div>
+                <div class="stat-label">Points</div>
+              </div>
+            </div>
+            <div class="impact-tag">${plant.impact}</div>
+          </div>
+          <div class="name-tag">${plant.name.split(' ')[0]}</div>
+        `;
+        sliderContainer.appendChild(card);
+      });
+      
+      // Generate dots
+      const slidesPerView = getSlidesPerView();
+      const totalSlides = Math.ceil(communityPlants.length / slidesPerView);
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = `dot ${i === 0 ? 'active' : ''}`;
+        dot.dataset.slide = i;
+        dot.addEventListener('click', () => goToSlide(i));
+        sliderDots.appendChild(dot);
+      }
+      
+      // Get slides per view based on screen width
+      function getSlidesPerView() {
+        const width = window.innerWidth;
+        if (width >= 992) return 4;
+        if (width >= 768) return 2;
+        return 1;
+      }
+      
+      // Navigate to specific slide
+      function goToSlide(slideIndex) {
+        const slides = document.querySelectorAll('.plant-card');
+        const slidesPerView = getSlidesPerView();
+        const totalSlides = Math.ceil(slides.length / slidesPerView);
+        
+        if (slideIndex < 0) slideIndex = totalSlides - 1;
+        if (slideIndex >= totalSlides) slideIndex = 0;
+        
+        currentSlide = slideIndex;
+        const scrollAmount = slides[0].offsetWidth * slidesPerView * slideIndex;
+        sliderContainer.scrollTo({
+          left: scrollAmount,
+          behavior: 'smooth'
+        });
+        
+        // Update active dot
+        document.querySelectorAll('.dot').forEach((dot, index) => {
+          dot.classList.toggle('active', index === slideIndex);
+        });
+      }
+      
+      // Next slide
+      nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+      
+      // Previous slide
+      prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+      
+      // Auto slide every 5 seconds
+      let autoSlideInterval = setInterval(() => goToSlide(currentSlide + 1), 5000);
+      
+      // Pause auto slide on hover
+      sliderContainer.addEventListener('mouseenter', () => {
+        clearInterval(autoSlideInterval);
+      });
+      
+      sliderContainer.addEventListener('mouseleave', () => {
+        autoSlideInterval = setInterval(() => goToSlide(currentSlide + 1), 5000);
+      });
+      
+      // Update on resize
+      window.addEventListener('resize', () => {
+        // Update dots
+        sliderDots.innerHTML = '';
+        const newSlidesPerView = getSlidesPerView();
+        const newTotalSlides = Math.ceil(communityPlants.length / newSlidesPerView);
+        for (let i = 0; i < newTotalSlides; i++) {
+          const dot = document.createElement('div');
+          dot.className = `dot ${i === currentSlide ? 'active' : ''}`;
+          dot.dataset.slide = i;
+          dot.addEventListener('click', () => goToSlide(i));
+          sliderDots.appendChild(dot);
+        }
+        
+        // Go to current slide with new calculation
+        goToSlide(currentSlide);
+      });
+    });
+  </script>
+</body>
+</html>
