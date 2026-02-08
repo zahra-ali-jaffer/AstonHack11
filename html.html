@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Garden - Pocket Garden</title>
+    <title>Pocket Garden - Your Garden</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        /* Header styles from dashboard */
         :root {
             --primary-green: #478778;
             --light-green: #AFE1AF;
@@ -23,21 +22,9 @@
             --shadow: rgba(0, 0, 0, 0.1);
             --earthcoin-gold: #FFD700;
             --earthcoin-dark: #B8860B;
-            --text-muted: #666666;
-            --danger: #dc3545;
         }
         
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            color: var(--dark-gray);
-            line-height: 1.6;
-            background-color: #f9fdf9;
-            background:
-                linear-gradient(rgba(255, 255, 255, 0.45), rgba(255,255,255,0.45));
-        }
-        
-        /* Header & Navigation */
-        header {
+        .dashboard-header {
             padding: 20px 0;
             display: flex;
             justify-content: space-between;
@@ -49,7 +36,7 @@
         }
         
         .header-container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             padding: 0 20px;
             width: 100%;
@@ -104,6 +91,22 @@
         
         .nav-btn i {
             font-size: 18px;
+        }
+        
+        .earthcoin-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--earthcoin-gold), var(--earthcoin-dark));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(184, 134, 11, 0.2);
+        }
+        
+        .earthcoin-display i {
+            font-size: 20px;
         }
         
         .user-profile {
@@ -228,969 +231,109 @@
             margin: 10px 0;
         }
         
-        /* Main Layout */
+        /* Override original header */
+        .main-container .header {
+            display: none;
+        }
+        
+        body {
+            background: linear-gradient(rgba(255, 255, 255, 0.45), rgba(255,255,255,0.45)), url("bg.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            padding: 20px;
+            opacity: 93%;
+        }
+        
         .main-container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 0 20px 40px;
         }
         
-        .page-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .page-header h1 {
+        .page-title {
             font-family: 'Quicksand', sans-serif;
-            font-size: 48px;
-            color: var(--dark-green);
-            margin-bottom: 10px;
-        }
-        
-        .page-header p {
-            font-size: 18px;
-            color: var(--text-muted);
-        }
-        
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        @media (max-width: 1200px) {
-            .main-layout {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* Cards */
-        .card {
-            background-color: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-        }
-        
-        .card-header {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 24px;
-            color: var(--dark-green);
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        /* Left Panel - Plant Details */
-        .plant-detail {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-        
-        .plant-preview {
-            background: linear-gradient(135deg, #f0f9f0, #e0f2e1);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 3px dashed var(--light-green);
-        }
-        
-        .plant-preview.active {
-            border-style: solid;
-            border-color: var(--primary-green);
-        }
-        
-        .plant-preview:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(71, 135, 120, 0.1);
-        }
-        
-        .add-plant-box {
-            width: 100px;
-            height: 100px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 48px;
-            color: var(--primary-green);
-        }
-        
-        .plant-name-large {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--dark-green);
-            margin-bottom: 10px;
-        }
-        
-        .plant-stage-badge {
-            display: inline-block;
-            background-color: var(--light-green);
-            color: var(--dark-green);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        
-        .stat-group {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .stat-label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .stat-label span {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            color: var(--dark-green);
-        }
-        
-        .stat-icon {
-            font-size: 20px;
-        }
-        
-        .stat-value {
-            font-weight: 700;
-            font-size: 18px;
-        }
-        
-        .progress-bar-container {
-            height: 12px;
-            background-color: #e0e0e0;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-        
-        .progress-bar-fill {
-            height: 100%;
-            border-radius: 6px;
-            transition: width 0.5s ease;
-        }
-        
-        .progress-water {
-            background: linear-gradient(to right, #4facfe, #00f2fe);
-        }
-        
-        .progress-sun {
-            background: linear-gradient(to right, #ffd166, #ff9e6d);
-        }
-        
-        .progress-happy {
-            background: linear-gradient(to right, #a8e6cf, #51d0de);
-        }
-        
-        .storage-section {
-            background-color: #f9f9f9;
-            border-radius: 15px;
-            padding: 25px;
-        }
-        
-        .storage-header {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--dark-green);
-            margin-bottom: 20px;
-        }
-        
-        .storage-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .storage-item {
-            background-color: white;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid #e0e0e0;
-        }
-        
-        .storage-item:hover {
-            border-color: var(--primary-green);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .storage-item.usable {
-            border-color: var(--primary-green);
-            background-color: #f0f9f0;
-        }
-        
-        .storage-icon {
             font-size: 32px;
-            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
-        .storage-count {
+        .page-title i {
             font-size: 28px;
-            font-weight: 700;
-            color: var(--dark-green);
-            margin-bottom: 5px;
         }
         
-        .action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .btn {
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .btn-secondary {
-            background-color: var(--light-gray);
-            color: var(--dark-gray);
-        }
-        
-        .btn-secondary:hover {
-            background-color: #e0e0e0;
-            transform: translateY(-2px);
-        }
-        
-        .btn-accent {
-            background-color: var(--primary-green);
-            color: white;
-        }
-        
-        .btn-accent:hover {
-            background-color: var(--dark-green);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(71, 135, 120, 0.3);
-        }
-        
-        /* Center Panel - Garden */
-        .garden-section {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-        
-        .mission-banner {
-            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .mission-title {
-            font-size: 18px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .mission-progress-text {
-            font-size: 20px;
-            font-weight: 700;
-        }
-        
-        .plants-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        
-        @media (max-width: 1200px) {
-            .plants-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .plants-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .plant-card {
-            background-color: #f9f9f9;
-            border-radius: 15px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid #e0e0e0;
-        }
-        
-        .plant-card:hover {
-            border-color: var(--primary-green);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .plant-card.selected {
-            border-color: var(--primary-green);
-            background-color: #f0f9f0;
-            box-shadow: 0 0 0 3px rgba(71, 135, 120, 0.1);
-        }
-        
-        .plant-card.empty {
-            background: linear-gradient(135deg, #f9fdf9, #f0f9f0);
-            border-style: dashed;
-            border-color: var(--light-green);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 200px;
-        }
-        
-        .empty-slot-content {
-            text-align: center;
-            color: var(--text-muted);
-        }
-        
-        .empty-slot-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-            opacity: 0.5;
-        }
-        
-        .plant-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .plant-icon {
-            font-size: 40px;
-            width: 60px;
-            height: 60px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .plant-info {
-            flex: 1;
-        }
-        
-        .plant-name {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--dark-green);
-            margin-bottom: 5px;
-        }
-        
-        .plant-stage {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-        
-        .plant-actions {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .plant-action-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: none;
-            background-color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-        
-        .plant-action-btn:hover {
-            transform: scale(1.1);
-        }
-        
-        .edit-btn:hover {
-            background-color: #e3f2fd;
-            color: #1976d2;
-        }
-        
-        .remove-btn:hover {
-            background-color: #ffebee;
-            color: var(--danger);
-        }
-        
-        .plant-stats-mini {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-        
-        .mini-stat {
-            text-align: center;
-            background-color: white;
-            padding: 10px;
-            border-radius: 10px;
-        }
-        
-        .mini-stat-icon {
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-        
-        .mini-stat-value {
-            font-weight: 700;
-            color: var(--dark-green);
-        }
-        
-        .bottom-stats {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-        }
-        
-        .goal-card {
-            background-color: #f0f9f0;
-            border-radius: 15px;
-            padding: 20px;
-        }
-        
-        .goal-label {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--dark-green);
-            margin-bottom: 10px;
-        }
-        
-        .goal-progress {
-            background-color: white;
-            border-radius: 8px;
-            padding: 3px;
-            position: relative;
-        }
-        
-        .goal-fill {
-            height: 20px;
-            background: linear-gradient(to right, var(--light-green), var(--primary-green));
-            border-radius: 6px;
-            transition: width 0.5s ease;
-        }
-        
-        .goal-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-weight: 600;
-            color: var(--dark-green);
-            font-size: 14px;
-        }
-        
+        /* EarthCredits Styling */
         .coins-card {
-            background-color: #fff8e1;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(184, 134, 11, 0.1));
             border: 2px solid var(--earthcoin-gold);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
         }
         
         .coins-amount {
-            font-size: 32px;
-            font-weight: 700;
             color: var(--earthcoin-dark);
-            margin-bottom: 5px;
-        }
-        
-        .coins-label {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-        
-        /* Right Panel - Store */
-        .store-section {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-        
-        .store-header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .store-header-title {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 24px;
-            color: var(--dark-green);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         
         .store-coins-display {
-            display: flex;
-            align-items: center;
-            gap: 8px;
             background: linear-gradient(135deg, var(--earthcoin-gold), var(--earthcoin-dark));
             color: white;
-            padding: 8px 15px;
-            border-radius: 50px;
+        }
+        
+        .activity-amount {
+            color: var(--earthcoin-dark);
             font-weight: 600;
         }
         
-        .coin-icon {
-            font-size: 18px;
-        }
-        
-        .coin-amount {
-            font-size: 18px;
-        }
-        
-        .store-category {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .category-title {
-            font-size: 18px;
+        .goal-text {
+            color: var(--earthcoin-dark);
             font-weight: 600;
-            color: var(--dark-green);
         }
         
-        .store-items {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .store-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #f9f9f9;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
+        /* Shop item styling */
         .store-item:hover {
-            border-color: var(--primary-green);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .item-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .item-icon {
-            font-size: 32px;
-            width: 50px;
-            height: 50px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .item-details h4 {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--dark-green);
-            margin-bottom: 3px;
+            border-color: var(--earthcoin-gold);
         }
         
         .item-price {
-            font-weight: 700;
             color: var(--earthcoin-dark);
-            font-size: 18px;
-        }
-        
-        /* Achievements */
-        .achievements-section {
-            margin-top: 30px;
-        }
-        
-        .achievements-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        
-        @media (max-width: 1200px) {
-            .achievements-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .achievements-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .achievement-item {
-            background-color: #f9f9f9;
-            border-radius: 15px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: all 0.3s ease;
-        }
-        
-        .achievement-item.unlocked {
-            border: 2px solid var(--primary-green);
-            background-color: #f0f9f0;
-        }
-        
-        .achievement-item.locked {
-            opacity: 0.6;
-            filter: grayscale(0.5);
-        }
-        
-        .achievement-icon {
-            font-size: 32px;
-            width: 60px;
-            height: 60px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .achievement-info {
-            flex: 1;
-        }
-        
-        .achievement-name {
-            font-size: 16px;
             font-weight: 600;
-            color: var(--dark-green);
-            margin-bottom: 5px;
-        }
-        
-        .achievement-desc {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-        
-        /* Modals */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            z-index: 2000;
-            justify-content: center;
+            display: flex;
             align-items: center;
+            gap: 5px;
         }
         
-        .modal.active {
-            display: flex;
+        /* Achievement styling */
+        .achievement-item.unlocked {
+            border-color: var(--earthcoin-gold);
         }
         
-        .modal-content {
-            background-color: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            text-align: center;
-        }
-        
-        .modal-header {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 28px;
-            color: var(--dark-green);
-            margin-bottom: 25px;
-        }
-        
-        .modal-body {
-            margin-bottom: 30px;
-        }
-        
-        .modal-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-        
+        /* Button styling */
         .btn-primary {
-            background-color: var(--primary-green);
-            color: white;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
         }
         
         .btn-primary:hover {
-            background-color: var(--dark-green);
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, var(--dark-green), #065c4f);
         }
         
-        .btn-danger {
-            background-color: var(--danger);
-            color: white;
-        }
-        
-        .btn-danger:hover {
-            background-color: #c82333;
-            transform: translateY(-2px);
-        }
-        
-        .leaderboard-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .leaderboard-entry {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 12px;
-        }
-        
-        .leaderboard-entry.current-user {
-            background-color: #f0f9f0;
-            border: 2px solid var(--primary-green);
-        }
-        
-        .rank-badge {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 16px;
-        }
-        
-        .rank-badge.gold {
-            background-color: #ffd700;
-            color: #856404;
-        }
-        
-        .rank-badge.silver {
-            background-color: #c0c0c0;
-            color: #333;
-        }
-        
-        .rank-badge.bronze {
-            background-color: #cd7f32;
-            color: white;
-        }
-        
-        .rank-badge.other {
-            background-color: #e0e0e0;
-            color: #666;
-        }
-        
-        .player-info {
-            flex: 1;
-            text-align: left;
-        }
-        
-        .player-name {
-            font-weight: 600;
-            color: var(--dark-green);
-            margin-bottom: 3px;
-        }
-        
-        .carbon-amount {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-        
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        
-        .summary-item {
-            background-color: #f9f9f9;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .summary-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-        
-        .summary-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--dark-green);
-            margin-bottom: 5px;
-        }
-        
-        .summary-label {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-        
-        .rename-input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-        
-        .rename-input:focus {
-            outline: none;
-            border-color: var(--primary-green);
-            box-shadow: 0 0 0 3px rgba(71, 135, 120, 0.1);
-        }
-        
-        .confirm-message {
-            font-size: 16px;
-            line-height: 1.6;
+        .btn-accent {
+            background: linear-gradient(135deg, var(--earthcoin-gold), var(--earthcoin-dark));
             color: var(--dark-gray);
         }
         
-        /* Notifications */
-        .notification {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background-color: white;
-            border-left: 4px solid var(--primary-green);
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 1000;
-            animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
-            max-width: 300px;
-        }
-        
-        .notification.error {
-            border-left-color: var(--danger);
-        }
-        
-        .notification-icon {
-            font-size: 20px;
-        }
-        
-        .notification-text {
-            font-size: 14px;
-            color: var(--dark-gray);
-        }
-        
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .header-actions {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .nav-btn span {
-                display: none;
-            }
-            
-            .page-header h1 {
-                font-size: 36px;
-            }
-            
-            .modal-content {
-                padding: 30px 20px;
-            }
-            
-            .modal-buttons {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-            }
+        .btn-accent:hover {
+            background: linear-gradient(135deg, var(--earthcoin-dark), #9c6b0a);
+            color: white;
         }
     </style>
 </head>
+
 <body>
-    <!-- Header -->
-    <header>
+    <!-- Dashboard-style Header -->
+    <header class="dashboard-header">
         <div class="header-container">
             <div class="logo">
                 <div class="logo-icon">🌱</div>
@@ -1204,13 +347,17 @@
                 <a href="community.html" class="nav-btn">
                     <i class="fas fa-users"></i> <span>Community</span>
                 </a>
-                <a href="html.html" class="nav-btn">
+                <a href="html.html" class="nav-btn" style="background-color: var(--primary-green); color: white;">
                     <i class="fas fa-seedling"></i> <span>Your Garden</span>
                 </a>
                 
+                <div class="earthcoin-display" id="headerEarthCoins">
+                    <i class="fas fa-coins"></i> <span id="earthCoinsCount">0</span> 🪙
+                </div>
+                
                 <div class="user-profile">
                     <div class="profile-circle" id="profileCircle">
-                        <div class="profile-placeholder" id="profilePlaceholder">👤</div>
+                        <div class="profile-placeholder" id="profilePlaceholder">🐙</div>
                         <img id="profileImage" class="profile-image" style="display: none;" alt="Profile Icon">
                     </div>
                 </div>
@@ -1221,11 +368,11 @@
         <div class="profile-dropdown" id="profileDropdown">
             <div class="dropdown-header">
                 <div class="dropdown-profile-circle" id="dropdownProfileCircle">
-                    <div class="dropdown-profile-placeholder" id="dropdownProfilePlaceholder">👤</div>
+                    <div class="dropdown-profile-placeholder" id="dropdownProfilePlaceholder">🐙</div>
                     <img id="dropdownProfileImage" class="dropdown-profile-image" style="display: none;" alt="Profile Icon">
                 </div>
-                <div class="dropdown-user-name" id="dropdownUserName">Gardener</div>
-                <div class="dropdown-user-email" id="dropdownUserEmail">Welcome!</div>
+                <div class="dropdown-user-name" id="dropdownUserName">User Name</div>
+                <div class="dropdown-user-email" id="dropdownUserEmail">user@example.com</div>
             </div>
             <div class="dropdown-menu">
                 <a href="profile.html" class="dropdown-item">
@@ -1247,12 +394,11 @@
             </div>
         </div>
     </header>
-    
-    <!-- Main Content -->
+
     <div class="main-container">
-        <div class="page-header">
-            <h1>Your Garden</h1>
-            <p>Care for plants, save the planet - one garden at a time</p>
+        <!-- Page Title -->
+        <div class="page-title">
+            <i class="fas fa-seedling"></i> Your Garden
         </div>
 
         <div class="main-layout">
@@ -1261,12 +407,14 @@
                 <div class="card-header">🪴 Plant Details</div>
 
                 <div class="plant-preview" id="plantPreview">
-                    <div class="add-plant-box" id="detailIcon">
-                        <span class="plus-icon">+</span>
+                    <div class="plant-preview-visual" id="detailIconContainer">
+                        <div class="plant-icon-large add-plant-box" id="detailIcon">
+                            <span class="plus-icon">+</span>
+                        </div>
                     </div>
-
                     <div class="plant-name-large" id="detailName">Select a Plant</div>
                     <div class="plant-stage-badge" id="detailStage">No plant selected</div>
+                    <div class="plant-age" id="detailAge" style="display: none;"></div>
                 </div>
 
                 <div class="stat-group" id="statGroup" style="display: none;">
@@ -1292,39 +440,47 @@
 
                     <div class="stat-item">
                         <div class="stat-label">
-                            <span><span class="stat-icon">💖</span> Happiness</span>
+                            <span><span class="stat-icon">💚</span> Health</span>
                             <span class="stat-value" id="happyStat">0%</span>
                         </div>
                         <div class="progress-bar-container">
                             <div class="progress-bar-fill progress-happy" id="happyBar" style="width: 0%"></div>
                         </div>
                     </div>
+
+                    <!-- Plant care requirements -->
+                    <div class="care-requirements" id="careRequirements">
+                        <div class="care-label">Care Needs</div>
+                        <div class="care-items" id="careItems"></div>
+                    </div>
                 </div>
 
                 <div class="storage-section">
-                    <div class="storage-header">Storage Shed</div>
+                    <div class="storage-header">Resources</div>
                     <div class="storage-grid">
-                        <div class="storage-item" id="waterItem" onclick="useResource('water')">
+                        <button class="storage-item" id="waterItem" onclick="useResource('water')"
+                            aria-label="Use water">
                             <div class="storage-icon">💧</div>
-                            <div class="storage-count" id="waterStorage">0</div>
-                            <div style="font-size: 0.85em; color: var(--text-muted);">Water</div>
-                        </div>
-                        <div class="storage-item" id="sunItem" onclick="useResource('sunlight')">
+                            <div class="storage-count" id="waterStorage">20</div>
+                            <div class="storage-label">Water</div>
+                        </button>
+                        <button class="storage-item" id="sunItem" onclick="useResource('sunlight')"
+                            aria-label="Use sunlight">
                             <div class="storage-icon">🌤️</div>
-                            <div class="storage-count" id="sunInventory">0</div>
-                            <div style="font-size: 0.85em; color: var(--text-muted);">Sunlight</div>
-                        </div>
+                            <div class="storage-count" id="sunInventory">20</div>
+                            <div class="storage-label">Sunlight</div>
+                        </button>
                     </div>
 
                     <div class="action-buttons">
-                        <button class="btn btn-secondary" onclick="openLeaderboard()">
-                            <i class="fas fa-trophy"></i> Leaderboard
+                        <button class="btn btn-secondary" onclick="openLeaderboard()" aria-label="View leaderboard">
+                            📊 Leaderboard
                         </button>
-                        <button class="btn btn-accent" onclick="showSummary()">
-                            <i class="fas fa-chart-bar"></i> Daily Summary
+                        <button class="btn btn-accent" onclick="showSummary()" aria-label="View daily summary">
+                            📈 Summary
                         </button>
-                        <button class="btn btn-primary" onclick="refreshFromDashboard()">
-                            <i class="fas fa-sync-alt"></i> Refresh
+                        <button class="btn btn-tertiary" onclick="openSettings()" aria-label="Open settings">
+                            ⚙️ Settings
                         </button>
                     </div>
                 </div>
@@ -1334,14 +490,15 @@
             <div class="card garden-section">
                 <div class="mission-banner">
                     <div class="mission-title">
-                        <i class="fas fa-bullseye"></i> Today's Mission: Save Carbon!
+                        <i class="fas fa-leaf"></i> Carbon Tracking
                     </div>
                     <div class="mission-progress-text" id="missionText">0g / 500g CO₂</div>
+                    <button class="btn btn-primary" onclick="openCarbonLog()" aria-label="Log carbon activity">
+                        <i class="fas fa-plus"></i> Log Activity
+                    </button>
                 </div>
 
-                <div class="plants-grid" id="plantsGrid">
-                    <!-- Plants will be loaded here -->
-                </div>
+                <div class="plants-grid" id="plantsGrid"></div>
 
                 <div class="bottom-stats">
                     <div class="goal-card">
@@ -1364,7 +521,7 @@
             <!-- RIGHT PANEL -->
             <div class="card store-section">
                 <div class="store-header-container">
-                    <div class="store-header-title">🧺 Florist</div>
+                    <div class="store-header-title">Shop</div>
                     <div class="store-coins-display">
                         <span class="coin-icon">🪙</span>
                         <span class="coin-amount" id="storeCoinsDisplay">0</span>
@@ -1374,72 +531,36 @@
                 <div class="store-category">
                     <div class="category-title">Resources</div>
                     <div class="store-items">
-                        <div class="store-item" onclick="buyItem('water', 10, 20)">
+                        <button class="store-item" onclick="buyItem('water', 10, 20)"
+                            aria-label="Buy water pack for 20 credits">
                             <div class="item-left">
                                 <div class="item-icon">💧</div>
                                 <div class="item-details">
                                     <h4>Water Pack</h4>
-                                    <p style="font-size: 0.85em; color: var(--text-muted);">x10</p>
+                                    <p>x10 units</p>
                                 </div>
                             </div>
                             <div class="item-price">🪙 20</div>
-                        </div>
+                        </button>
 
-                        <div class="store-item" onclick="buyItem('sunlight', 10, 20)">
+                        <button class="store-item" onclick="buyItem('sunlight', 10, 20)"
+                            aria-label="Buy sunlight pack for 20 credits">
                             <div class="item-left">
                                 <div class="item-icon">🌤️</div>
                                 <div class="item-details">
                                     <h4>Sunlight Pack</h4>
-                                    <p style="font-size: 0.85em; color: var(--text-muted);">x10</p>
+                                    <p>x10 units</p>
                                 </div>
                             </div>
                             <div class="item-price">🪙 20</div>
-                        </div>
+                        </button>
                     </div>
                 </div>
 
                 <div class="store-category">
-                    <div class="category-title">Plants & Flowers</div>
-                    <div class="store-items">
-                        <div class="store-item" onclick="buyPlant('Lily', '🌸', 120, 'lily')">
-                            <div class="item-left">
-                                <div class="item-icon">🌸</div>
-                                <div class="item-details">
-                                    <h4>Lily</h4>
-                                </div>
-                            </div>
-                            <div class="item-price">🪙 120</div>
-                        </div>
-
-                        <div class="store-item" onclick="buyPlant('Tulip', '🌷', 100, 'tulip')">
-                            <div class="item-left">
-                                <div class="item-icon">🌷</div>
-                                <div class="item-details">
-                                    <h4>Tulip</h4>
-                                </div>
-                            </div>
-                            <div class="item-price">🪙 100</div>
-                        </div>
-
-                        <div class="store-item" onclick="buyPlant('Rose', '🌹', 400, 'rose')">
-                            <div class="item-left">
-                                <div class="item-icon">🌹</div>
-                                <div class="item-details">
-                                    <h4>Rose</h4>
-                                </div>
-                            </div>
-                            <div class="item-price">🪙 400</div>
-                        </div>
-
-                        <div class="store-item" onclick="buyPlant('Sunflower', '🌻', 200, 'sunflower')">
-                            <div class="item-left">
-                                <div class="item-icon">🌻</div>
-                                <div class="item-details">
-                                    <h4>Sunflower</h4>
-                                </div>
-                            </div>
-                            <div class="item-price">🪙 200</div>
-                        </div>
+                    <div class="category-title">Plants</div>
+                    <div class="store-items" id="plantStoreItems">
+                        <!-- Dynamically populated -->
                     </div>
                 </div>
             </div>
@@ -1447,62 +568,103 @@
 
         <!-- ACHIEVEMENTS SECTION -->
         <div class="card achievements-section">
-            <div class="card-header">🏆 Achievements</div>
-            <div class="achievements-grid">
-                <div class="achievement-item" id="achievement-first-sprout">
-                    <div class="achievement-icon">🌱</div>
-                    <div class="achievement-info">
-                        <div class="achievement-name">First Sprout</div>
-                        <div class="achievement-desc">Plant your first seed</div>
+            <div class="card-header">Achievements</div>
+            <div class="achievements-grid" id="achievementsGrid">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Plant View Modal -->
+    <div class="modal" id="plantDetailModal" role="dialog">
+        <div class="modal-content modal-large">
+            <div class="modal-header-bar">
+                <h2 id="detailModalPlantName">Plant Name</h2>
+                <button class="modal-close-btn" onclick="closeModal('plantDetailModal')" aria-label="Close">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="plant-detail-layout">
+                <div class="plant-visual-section">
+                    <div class="plant-visual-container">
+                        <div class="plant-visual" id="plantVisual"></div>
                     </div>
+                    <div class="plant-stage-label" id="detailModalStage">Seedling</div>
                 </div>
-                <div class="achievement-item" id="achievement-water-master">
-                    <div class="achievement-icon">💧</div>
-                    <div class="achievement-info">
-                        <div class="achievement-name">Water Master</div>
-                        <div class="achievement-desc">Water 10 plants</div>
+                <div class="plant-stats-section">
+                    <div class="plant-detail-info">
+                        <div class="info-row">
+                            <span class="info-label">Type</span>
+                            <span class="info-value" id="detailModalType">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Age</span>
+                            <span class="info-value" id="detailModalAge">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Carbon/Day</span>
+                            <span class="info-value" id="detailModalCarbon">-</span>
+                        </div>
                     </div>
-                </div>
-                <div class="achievement-item" id="achievement-forest-guardian">
-                    <div class="achievement-icon">🌳</div>
-                    <div class="achievement-info">
-                        <div class="achievement-name">Forest Guardian</div>
-                        <div class="achievement-desc">Grow 5 plants to maturity</div>
+                    <div class="plant-detail-stats">
+                        <div class="detail-stat-item">
+                            <div class="detail-stat-header">
+                                <span>💧 Water Level</span>
+                                <span id="detailModalWater">0%</span>
+                            </div>
+                            <div class="detail-progress-bar">
+                                <div class="detail-progress-fill progress-water" id="detailModalWaterBar"></div>
+                            </div>
+                        </div>
+                        <div class="detail-stat-item">
+                            <div class="detail-stat-header">
+                                <span>🌤️ Sunlight Level</span>
+                                <span id="detailModalSunlight">0%</span>
+                            </div>
+                            <div class="detail-progress-bar">
+                                <div class="detail-progress-fill progress-sun" id="detailModalSunlightBar"></div>
+                            </div>
+                        </div>
+                        <div class="detail-stat-item">
+                            <div class="detail-stat-header">
+                                <span>💚 Health</span>
+                                <span id="detailModalHealth">0%</span>
+                            </div>
+                            <div class="detail-progress-bar">
+                                <div class="detail-progress-fill progress-happy" id="detailModalHealthBar"></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="achievement-item" id="achievement-planet-saver">
-                    <div class="achievement-icon">🌍</div>
-                    <div class="achievement-info">
-                        <div class="achievement-name">Planet Saver</div>
-                        <div class="achievement-desc">Save 10kg of CO₂</div>
-                    </div>
-                </div>
-                <div class="achievement-item" id="achievement-top-gardener">
-                    <div class="achievement-icon">👑</div>
-                    <div class="achievement-info">
-                        <div class="achievement-name">Top Gardener</div>
-                        <div class="achievement-desc">Reach #1 on leaderboard</div>
-                    </div>
-                </div>
-                <div class="achievement-item" id="achievement-coin-collector">
-                    <div class="achievement-icon">💰</div>
-                    <div class="achievement-info">
-                        <div class="achievement-name">Coin Collector</div>
-                        <div class="achievement-desc">Earn 1000 EarthCredits</div>
+                    <div class="plant-care-info">
+                        <div class="care-info-title">Care Requirements</div>
+                        <div id="detailModalCareInfo"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Leaderboard Modal -->
-    <div class="modal" id="leaderboardModal">
+    <!-- Carbon Log Modal -->
+    <div class="modal" id="carbonModal" role="dialog" aria-labelledby="carbonModalTitle">
         <div class="modal-content">
-            <div class="modal-header">Global Leaderboard</div>
+            <div class="modal-header" id="carbonModalTitle">Log Eco Activity</div>
             <div class="modal-body">
-                <div class="leaderboard-list" id="leaderboardList">
-                    <!-- Leaderboard entries will be loaded here -->
-                </div>
+                <div class="activity-list" id="activityList"></div>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal('carbonModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Modal -->
+    <div class="modal" id="leaderboardModal" role="dialog" aria-labelledby="leaderboardModalTitle">
+        <div class="modal-content">
+            <div class="modal-header" id="leaderboardModalTitle">Leaderboard</div>
+            <div class="modal-body">
+                <div class="leaderboard-list" id="leaderboardList"></div>
             </div>
             <div class="modal-buttons">
                 <button class="btn btn-secondary" onclick="closeModal('leaderboardModal')">Close</button>
@@ -1511,12 +673,14 @@
     </div>
 
     <!-- Summary Modal -->
-    <div class="modal" id="summaryModal">
+    <div class="modal" id="summaryModal" role="dialog" aria-labelledby="summaryModalTitle">
         <div class="modal-content">
-            <div class="modal-header">📊 Daily Summary</div>
+            <div class="modal-header" id="summaryModalTitle">Garden Summary</div>
             <div class="modal-body">
-                <div class="summary-grid" id="summaryGrid">
-                    <!-- Summary items will be inserted here -->
+                <div class="summary-grid" id="summaryGrid"></div>
+                <div class="summary-chart" id="summaryChart">
+                    <h3>7-Day Carbon History</h3>
+                    <div class="chart-container" id="carbonChart"></div>
                 </div>
             </div>
             <div class="modal-buttons">
@@ -1525,557 +689,416 @@
         </div>
     </div>
 
-    <!-- Rename Modal -->
-    <div class="modal" id="renameModal">
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal" role="dialog" aria-labelledby="settingsModalTitle">
         <div class="modal-content">
-            <div class="modal-header">🖊️ Rename Plant</div>
+            <div class="modal-header" id="settingsModalTitle">Settings</div>
             <div class="modal-body">
-                <input type="text" id="renameInput" class="rename-input" placeholder="Enter new name..." maxlength="20">
+                <div class="settings-group">
+                    <h3>Data Management</h3>
+                    <button class="btn btn-secondary" onclick="exportData()" style="margin-bottom: 10px;">
+                        <i class="fas fa-download"></i> Export Garden Data
+                    </button>
+                    <button class="btn btn-secondary" onclick="importData()" style="margin-bottom: 10px;">
+                        <i class="fas fa-upload"></i> Import Garden Data
+                    </button>
+                    <button class="btn btn-danger" onclick="confirmReset()">
+                        <i class="fas fa-trash"></i> Reset All Progress
+                    </button>
+                </div>
+                <div class="settings-group">
+                    <h3>Game Info</h3>
+                    <p>Plants: <strong id="settingsPlantCount">0</strong></p>
+                    <p>Total Carbon Saved: <strong id="settingsTotalCarbon">0g</strong></p>
+                    <p>Days Played: <strong id="settingsDaysPlayed">0</strong></p>
+                    <p>EarthCredits Earned: <strong id="settingsEarthCredits">0</strong> 🪙</p>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal('settingsModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rename Modal -->
+    <div class="modal" id="renameModal" role="dialog" aria-labelledby="renameModalTitle">
+        <div class="modal-content">
+            <div class="modal-header" id="renameModalTitle">Rename Plant</div>
+            <div class="modal-body">
+                <label for="renameInput" class="input-label">New name:</label>
+                <input type="text" id="renameInput" class="text-input" placeholder="Enter new name..." maxlength="20"
+                    aria-label="Plant name">
             </div>
             <div class="modal-buttons">
                 <button class="btn btn-secondary" onclick="closeModal('renameModal')">Cancel</button>
-                <button class="btn btn-primary" onclick="confirmRename()">Rename</button>
+                <button class="btn btn-primary" onclick="confirmRename()">Save</button>
             </div>
         </div>
     </div>
 
     <!-- Remove Plant Modal -->
-    <div class="modal" id="removeModal">
+    <div class="modal" id="removeModal" role="dialog" aria-labelledby="removeModalTitle">
         <div class="modal-content">
-            <div class="modal-header">⚠️ Remove Plant</div>
+            <div class="modal-header" id="removeModalTitle">Remove Plant</div>
             <div class="modal-body">
                 <div class="confirm-message">
                     Are you sure you want to remove <strong id="removePlantName"></strong>?<br><br>
-                    This will permanently delete the plant from your garden. This action cannot be undone.
+                    This action cannot be undone.
                 </div>
             </div>
             <div class="modal-buttons">
                 <button class="btn btn-secondary" onclick="closeModal('removeModal')">Cancel</button>
-                <button class="btn btn-danger" onclick="confirmRemove()">Remove Plant</button>
+                <button class="btn btn-danger" onclick="confirmRemove()">Remove</button>
             </div>
         </div>
     </div>
 
-    <script>
-        // Garden State - Connected to Dashboard
-        let state = {
-            coins: 0,
-            water: 20,
-            sunlight: 20,
-            carbonSaved: 0,
-            dailyGoal: 500,
-            selectedPlantId: null,
-            renamingPlantId: null,
-            removingPlantId: null,
-            plants: []
-        };
+    <!-- Hidden file input for import -->
+    <input type="file" id="importFileInput" accept=".json" style="display: none;" onchange="handleImportFile(event)">
 
-        // Carbon saving activities for random events
-        const carbonActivities = [
-            { text: 'Walked to work', amount: 50 },
-            { text: 'Used reusable bag', amount: 30 },
-            { text: 'Ate plant-based meal', amount: 80 },
-            { text: 'Recycled materials', amount: 40 },
-            { text: 'Took public transport', amount: 60 },
-            { text: 'Used renewable energy', amount: 70 },
-            { text: 'Composted waste', amount: 35 }
-        ];
+    <!-- Notification container -->
+    <div id="notificationContainer" aria-live="polite" aria-atomic="true"></div>
 
-        // Achievement tracking
-        const achievements = {
-            'first-sprout': { unlocked: false, condition: (state) => state.plants.length >= 1 },
-            'water-master': { unlocked: false, condition: (state) => false }, // Track separately
-            'forest-guardian': { unlocked: false, condition: (state) => state.plants.filter(p => p.stage === 'Mature').length >= 5 },
-            'planet-saver': { unlocked: false, condition: (state) => state.carbonSaved >= 10000 }, // 10kg in grams
-            'top-gardener': { unlocked: false, condition: (state) => false }, // Leaderboard based
-            'coin-collector': { unlocked: false, condition: (state) => state.coins >= 1000 }
-        };
-
-        // Water usage tracking
-        let waterUsageCount = 0;
-
-        // ==================== INITIALIZATION ====================
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Garden page loaded');
-            
-            // Profile dropdown functionality
-            const profileCircle = document.getElementById('profileCircle');
-            const profileDropdown = document.getElementById('profileDropdown');
-            
-            if (profileCircle) {
-                profileCircle.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    profileDropdown.classList.toggle('show');
-                });
-                
-                // Close dropdown when clicking outside
-                document.addEventListener('click', function() {
-                    profileDropdown.classList.remove('show');
-                });
-                
-                // Prevent dropdown from closing when clicking inside it
-                profileDropdown.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                });
-                
-                // Logout functionality
-                const logoutBtn = document.getElementById('logoutBtn');
-                if (logoutBtn) {
-                    logoutBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        localStorage.removeItem('currentUserId');
-                        window.location.href = 'index.html';
-                    });
-                }
-                
-                // Load user data
-                const currentUserId = localStorage.getItem('currentUserId');
-                let users = JSON.parse(localStorage.getItem('users') || '{}');
-                let currentUser = users[currentUserId] || {};
-                
-                // If no user is logged in, redirect to login
-                if (!currentUserId) {
-                    window.location.href = 'index.html';
-                    return;
-                }
-                
-                document.getElementById('dropdownUserName').textContent = currentUser.name || 'Gardener';
-                document.getElementById('dropdownUserEmail').textContent = currentUser.email || 'welcome@pocketgarden.com';
-                
-                // Load garden data from dashboard
-                loadGardenData();
-            }
-
-            // Add click event to plant preview
-            document.getElementById('plantPreview').addEventListener('click', function() {
-                if (!document.getElementById('statGroup').style.display || 
-                    document.getElementById('statGroup').style.display === 'none') {
-                    notify('🌱 Select a plant from your garden first!', 'error');
-                }
-            });
-            
-            // Add Enter key support for rename modal
-            const renameInput = document.getElementById('renameInput');
-            if (renameInput) {
-                renameInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        confirmRename();
-                    }
-                });
-            }
-        });
-
-        // ==================== DASHBOARD INTEGRATION ====================
-        function loadGardenData() {
-            console.log('Loading garden data from dashboard...');
-            
-            const currentUserId = localStorage.getItem('currentUserId');
-            let users = JSON.parse(localStorage.getItem('users') || '{}');
-            let currentUser = users[currentUserId] || {};
-            
-            // Get data from dashboard
-            const earthCredits = currentUser.earthCredits || 0;
-            const totalKgSaved = currentUser.totalKgSaved || 0;
-            const dashboardPlants = currentUser.plants || [];
-            const purchases = currentUser.purchases || [];
-            
-            console.log('Dashboard data:', {
-                earthCredits,
-                totalKgSaved,
-                dashboardPlants,
-                purchases
-            });
-            
-            // Update state with dashboard data
-            state.coins = earthCredits;
-            state.carbonSaved = Math.round(totalKgSaved * 1000); // Convert kg to grams
-            
-            // Load water and sunlight from purchases
-            state.water = 20; // Base amount
-            state.sunlight = 20; // Base amount
-            
-            purchases.forEach(purchase => {
-                if (purchase.item === 'water') {
-                    state.water += 10;
-                } else if (purchase.item === 'sunlight') {
-                    state.sunlight += 10;
-                }
-            });
-            
-            // Convert dashboard plants to garden plants format
-            if (dashboardPlants.length > 0) {
-                state.plants = dashboardPlants.map((plantType, index) => {
-                    const plantEmoji = {
-                        'Lily': '🌸',
-                        'Tulip': '🌷',
-                        'Rose': '🌹',
-                        'Sunflower': '🌻'
-                    }[plantType] || '🌱';
-                    
-                    // Check if plant already exists in state to preserve stats
-                    const existingPlant = state.plants.find(p => 
-                        p.type === plantType.toLowerCase() || p.name === plantType
-                    );
-                    
-                    if (existingPlant) {
-                        return existingPlant;
-                    }
-                    
-                    return {
-                        id: Date.now() + index,
-                        name: plantType,
-                        type: plantType.toLowerCase(),
-                        emoji: plantEmoji,
-                        stage: 'Mature',
-                        water: 100,
-                        sunlight: 100,
-                        happiness: 100
-                    };
-                });
-            }
-            
-            console.log('Loaded garden state:', state);
-            
-            // Initialize the garden
-            init();
-            
-            // Update achievements
-            updateAchievements();
+</body>
+<script src="js.js"></script>
+<script>
+    // ==================== HEADER AND EARTHCREDITS INTEGRATION ====================
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Garden page loaded - Initializing integration');
+        
+        const currentUserId = localStorage.getItem('currentUserId');
+        
+        // If no user is logged in, redirect to login
+        if (!currentUserId) {
+            window.location.href = 'index.html';
+            return;
         }
-
-        function saveGardenState() {
-            const currentUserId = localStorage.getItem('currentUserId');
-            if (!currentUserId) {
-                console.log('No user logged in, cannot save garden state');
-                return;
+        
+        // Initialize user data and EarthCredits
+        initializeUserIntegration();
+        
+        // Initialize starter plant
+        initializeStarterPlant();
+        
+        // Setup header functionality
+        setupHeaderFunctionality();
+        
+        // Initialize game after setup
+        setTimeout(() => {
+            if (window.init) {
+                window.init();
+                // Sync EarthCredits after game loads
+                setTimeout(syncEarthCreditsWithGame, 1000);
+            }
+        }, 500);
+    });
+    
+    function initializeUserIntegration() {
+        const currentUserId = localStorage.getItem('currentUserId');
+        let users = JSON.parse(localStorage.getItem('users') || '{}');
+        let currentUser = users[currentUserId] || {};
+        
+        // Initialize user data if missing
+        if (!currentUser.earthCredits) {
+            currentUser.earthCredits = 0;
+        }
+        if (!currentUser.dailyHabits) {
+            currentUser.dailyHabits = [];
+        }
+        if (!currentUser.totalKgSaved) {
+            currentUser.totalKgSaved = 0;
+        }
+        if (!currentUser.plants) {
+            currentUser.plants = [];
+        }
+        
+        // Save updated user
+        users[currentUserId] = currentUser;
+        localStorage.setItem('users', JSON.stringify(users));
+        
+        // Update EarthCredits display
+        updateEarthCreditsDisplay(currentUser);
+        
+        // Update profile
+        updateProfilePictures(currentUser);
+        
+        // Update user info
+        document.getElementById('dropdownUserName').textContent = currentUser.name || 'Gardener';
+        document.getElementById('dropdownUserEmail').textContent = currentUser.email || 'user@example.com';
+    }
+    
+    function updateEarthCreditsDisplay(user) {
+        const earthCredits = user.earthCredits || 0;
+        
+        // Update all EarthCredits displays
+        document.getElementById('earthCoinsCount').textContent = earthCredits;
+        document.getElementById('coinDisplay').textContent = earthCredits;
+        document.getElementById('storeCoinsDisplay').textContent = earthCredits;
+        
+        // Update game state if it exists
+        if (window.state) {
+            window.state.coins = earthCredits;
+        }
+    }
+    
+function updateProfilePictures(user) {
+    const profilePlaceholder = document.getElementById('profilePlaceholder');
+    const profileImage = document.getElementById('profileImage');
+    const dropdownProfilePlaceholder = document.getElementById('dropdownProfilePlaceholder');
+    const dropdownProfileImage = document.getElementById('dropdownProfileImage');
+    
+    // Clear any existing images
+    profileImage.src = '';
+    dropdownProfileImage.src = '';
+    
+    if (user.profileIcon && user.profileIcon.endsWith('.png')) {
+        // Create new image objects to ensure proper loading
+        const img1 = new Image();
+        img1.src = user.profileIcon;
+        img1.onload = function() {
+            profilePlaceholder.style.display = 'none';
+            profileImage.src = user.profileIcon;
+            profileImage.style.display = 'block';
+        };
+        img1.onerror = function() {
+            profilePlaceholder.textContent = user.profileIcon || '👤';
+        };
+        
+        const img2 = new Image();
+        img2.src = user.profileIcon;
+        img2.onload = function() {
+            dropdownProfilePlaceholder.style.display = 'none';
+            dropdownProfileImage.src = user.profileIcon;
+            dropdownProfileImage.style.display = 'block';
+        };
+        img2.onerror = function() {
+            dropdownProfilePlaceholder.textContent = user.profileIcon || '👤';
+        };
+    } else {
+        profilePlaceholder.textContent = user.profileIcon || '👤';
+        dropdownProfilePlaceholder.textContent = user.profileIcon || '👤';
+    }
+}
+    
+    function initializeStarterPlant() {
+        const currentUserId = localStorage.getItem('currentUserId');
+        let users = JSON.parse(localStorage.getItem('users') || '{}');
+        let currentUser = users[currentUserId] || {};
+        
+        const starterPlant = currentUser.starterPlant || 'Lily';
+        console.log('Starter plant:', starterPlant);
+        
+        // Check if we need to add starter plant to garden
+        const savedState = localStorage.getItem('pocketGarden');
+        let state = savedState ? JSON.parse(savedState) : null;
+        
+        if (!state || !state.plants || state.plants.length === 0) {
+            // Create new garden state with starter plant
+            const plantEmoji = {
+                'Lily': '🌸',
+                'Tulip': '🌷',
+                'Rose': '🌹',
+                'Sunflower': '🌻',
+                'Cactus': '🌵',
+                'Fern': '🌿',
+                'Orchid': '🌺',
+                'Daisy': '🌼'
+            }[starterPlant] || '🌱';
+            
+            const newPlant = {
+                id: Date.now(),
+                name: starterPlant,
+                type: starterPlant.toLowerCase(),
+                emoji: plantEmoji,
+                stage: 'Seedling',
+                water: 100,
+                sunlight: 100,
+                happiness: 100,
+                plantedAt: new Date().toISOString()
+            };
+            
+            const newState = {
+                coins: currentUser.earthCredits || 0,
+                water: 20,
+                sunlight: 20,
+                carbonSaved: 0,
+                dailyGoal: 500,
+                selectedPlantId: null,
+                renamingPlantId: null,
+                removingPlantId: null,
+                plants: [newPlant],
+                unlockedAchievements: [],
+                carbonHistory: [],
+                stats: {
+                    totalCarbonSaved: 0,
+                    totalCoinsEarned: 0,
+                    watersUsed: 0,
+                    sunlightsUsed: 0,
+                    plantsGrown: 0,
+                    activitiesLogged: 0,
+                    daysPlayed: 1,
+                    lastPlayDate: new Date().toDateString(),
+                    startDate: new Date().toISOString()
+                }
+            };
+            
+            localStorage.setItem('pocketGarden', JSON.stringify(newState));
+            console.log('Created new garden with starter plant:', newPlant);
+        }
+    }
+    
+    function setupHeaderFunctionality() {
+        const profileCircle = document.getElementById('profileCircle');
+        const profileDropdown = document.getElementById('profileDropdown');
+        
+        profileCircle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            profileDropdown.classList.toggle('show');
+        });
+        
+        document.addEventListener('click', function() {
+            profileDropdown.classList.remove('show');
+        });
+        
+        profileDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+        
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('currentUserId');
+            window.location.href = 'index.html';
+        });
+    }
+    
+    function syncEarthCreditsWithGame() {
+        const currentUserId = localStorage.getItem('currentUserId');
+        let users = JSON.parse(localStorage.getItem('users') || '{}');
+        let currentUser = users[currentUserId] || {};
+        
+        // Update game state with EarthCredits
+        if (window.state && currentUser.earthCredits !== undefined) {
+            window.state.coins = currentUser.earthCredits;
+            
+            // Update UI
+            if (window.updateUI) {
+                window.updateUI();
             }
             
-            let users = JSON.parse(localStorage.getItem('users') || '{}');
-            let currentUser = users[currentUserId] || {};
+            // Update display
+            updateEarthCreditsDisplay(currentUser);
+        }
+        
+        // Update settings modal
+        const settingsEarthCredits = document.getElementById('settingsEarthCredits');
+        if (settingsEarthCredits) {
+            settingsEarthCredits.textContent = currentUser.earthCredits || 0;
+        }
+    }
+    
+    // ==================== SHOP INTEGRATION ====================
+    // Override shop functions to use EarthCredits
+    function buyItem(type, qty, price) {
+        const currentUserId = localStorage.getItem('currentUserId');
+        let users = JSON.parse(localStorage.getItem('users') || '{}');
+        let currentUser = users[currentUserId] || {};
+        
+        if (!currentUser.earthCredits && currentUser.earthCredits !== 0) {
+            currentUser.earthCredits = 0;
+        }
+        
+        if (currentUser.earthCredits >= price) {
+            // Deduct EarthCredits
+            currentUser.earthCredits -= price;
             
-            // Update dashboard data with garden state
-            currentUser.earthCredits = state.coins;
-            currentUser.totalKgSaved = state.carbonSaved / 1000; // Convert grams to kg
-            
-            // Convert garden plants back to dashboard format
-            if (state.plants.length > 0) {
-                const plantTypeMap = {
-                    '🌸': 'Lily',
-                    '🌷': 'Tulip',
-                    '🌹': 'Rose',
-                    '🌻': 'Sunflower'
-                };
-                
-                currentUser.plants = state.plants.map(p => {
-                    return plantTypeMap[p.emoji] || p.name;
-                });
-            }
-            
-            // Save water/sunlight purchases
-            const baseResources = 20; // Base amount
-            const waterPurchases = Math.max(0, Math.floor((state.water - baseResources) / 10));
-            const sunlightPurchases = Math.max(0, Math.floor((state.sunlight - baseResources) / 10));
-            
-            // Update purchases in dashboard
-            if (!currentUser.purchases) currentUser.purchases = [];
-            
-            // Filter out existing resource purchases
-            currentUser.purchases = currentUser.purchases.filter(p => 
-                !['water', 'sunlight'].includes(p.item)
-            );
-            
-            // Add current resource purchases
-            for (let i = 0; i < waterPurchases; i++) {
-                currentUser.purchases.push({
-                    item: 'water',
-                    price: 20,
-                    date: new Date().toISOString()
-                });
-            }
-            
-            for (let i = 0; i < sunlightPurchases; i++) {
-                currentUser.purchases.push({
-                    item: 'sunlight',
-                    price: 20,
-                    date: new Date().toISOString()
-                });
-            }
-            
-            // Save back to localStorage
+            // Update users
             users[currentUserId] = currentUser;
             localStorage.setItem('users', JSON.stringify(users));
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
             
-            console.log('Garden state saved to dashboard:', {
-                earthCredits: currentUser.earthCredits,
-                totalKgSaved: currentUser.totalKgSaved,
-                plants: currentUser.plants,
-                purchases: currentUser.purchases
-            });
-        }
-
-        function refreshFromDashboard() {
-            console.log('Refreshing from dashboard...');
-            loadGardenData();
-            notify('🔄 Garden data refreshed from dashboard!');
-        }
-
-        // ==================== GARDEN FUNCTIONS ====================
-        function init() {
-            console.log('Initializing garden...');
-            renderPlants();
-            updateUI();
-            startGameLoops();
-        }
-
-        function renderPlants() {
-            const grid = document.getElementById('plantsGrid');
-            grid.innerHTML = '';
-
-            const maxSlots = 6;
-            
-            // Display user's plants
-            for (let i = 0; i < maxSlots; i++) {
-                if (i < state.plants.length) {
-                    const plant = state.plants[i];
-                    const card = document.createElement('div');
-                    card.className = 'plant-card';
-                    
-                    if (state.selectedPlantId === plant.id) {
-                        card.classList.add('selected');
-                    }
-
-                    card.onclick = (e) => {
-                        if (!e.target.closest('.plant-action-btn')) {
-                            selectPlant(plant.id);
-                        }
-                    };
-
-                    card.innerHTML = `
-                        <div class="plant-header">
-                            <div class="plant-icon">${plant.emoji}</div>
-                            <div class="plant-info">
-                                <div class="plant-name">${plant.name}</div>
-                                <div class="plant-stage">${plant.stage}</div>
-                            </div>
-                            <div class="plant-actions">
-                                <button class="plant-action-btn edit-btn" onclick="event.stopPropagation(); openRenameModal(${plant.id})" title="Rename plant">
-                                    🖊️
-                                </button>
-                                <button class="plant-action-btn remove-btn" onclick="event.stopPropagation(); openRemoveModal(${plant.id})" title="Remove plant">
-                                    🗑️
-                                </button>
-                            </div>
-                        </div>
-                        <div class="plant-stats-mini">
-                            <div class="mini-stat">
-                                <div class="mini-stat-icon">💧</div>
-                                <div class="mini-stat-value">${plant.water}%</div>
-                            </div>
-                            <div class="mini-stat">
-                                <div class="mini-stat-icon">🌤️</div>
-                                <div class="mini-stat-value">${plant.sunlight}%</div>
-                            </div>
-                            <div class="mini-stat">
-                                <div class="mini-stat-icon">💖</div>
-                                <div class="mini-stat-value">${plant.happiness}%</div>
-                            </div>
-                        </div>
-                    `;
-
-                    grid.appendChild(card);
-                } else {
-                    // Empty slot
-                    const emptyCard = document.createElement('div');
-                    emptyCard.className = 'plant-card empty';
-                    
-                    if (i === state.plants.length && state.plants.length < maxSlots) {
-                        // Next empty slot - show add plant prompt
-                        emptyCard.innerHTML = `
-                            <div class="empty-slot-content">
-                                <div class="add-plant-box">
-                                    <span class="plus-icon">+</span>
-                                </div>
-                                <div style="margin-top: 15px;">Add a Plant</div>
-                                <div style="font-size: 0.85em; margin-top: 5px; color: var(--text-muted);">Buy from the store!</div>
-                            </div>
-                        `;
-                        emptyCard.onclick = () => {
-                            notify('🌱 Buy a plant from the store to add to your garden!');
-                        };
-                    } else {
-                        // Regular empty slot
-                        emptyCard.innerHTML = `
-                            <div class="empty-slot-content">
-                                <div class="empty-slot-icon">🌱</div>
-                                <div>Empty Slot</div>
-                            </div>
-                        `;
-                    }
-                    
-                    grid.appendChild(emptyCard);
-                }
-            }
-        }
-
-        function selectPlant(id) {
-            state.selectedPlantId = id;
-            const plant = state.plants.find(p => p.id === id);
-
-            if (plant) {
-                document.getElementById('detailIcon').innerHTML = plant.emoji;
-                document.getElementById('detailName').textContent = plant.name;
-                document.getElementById('detailStage').textContent = plant.stage;
-
-                document.getElementById('waterStat').textContent = plant.water + '%';
-                document.getElementById('waterBar').style.width = plant.water + '%';
-
-                document.getElementById('sunStat').textContent = plant.sunlight + '%';
-                document.getElementById('sunBar').style.width = plant.sunlight + '%';
-
-                document.getElementById('happyStat').textContent = plant.happiness + '%';
-                document.getElementById('happyBar').style.width = plant.happiness + '%';
-
-                document.getElementById('statGroup').style.display = 'flex';
-                document.getElementById('plantPreview').classList.add('active');
-
-                // Highlight usable items
-                if (plant.water < 100) {
-                    document.getElementById('waterItem').classList.add('usable');
-                } else {
-                    document.getElementById('waterItem').classList.remove('usable');
-                }
-
-                if (plant.sunlight < 100) {
-                    document.getElementById('sunItem').classList.add('usable');
-                } else {
-                    document.getElementById('sunItem').classList.remove('usable');
-                }
-            }
-
-            renderPlants();
-        }
-
-        function updateUI() {
-            document.getElementById('coinDisplay').textContent = state.coins;
-            document.getElementById('storeCoinsDisplay').textContent = state.coins;
-            document.getElementById('waterStorage').textContent = state.water;
-            document.getElementById('sunInventory').textContent = state.sunlight;
-            document.getElementById('missionText').textContent = `${state.carbonSaved}g / ${state.dailyGoal}g CO₂`;
-
-            const goalPercent = Math.min((state.carbonSaved / state.dailyGoal) * 100, 100);
-            document.getElementById('goalBar').style.width = goalPercent + '%';
-            document.getElementById('goalText').textContent = `${state.carbonSaved} / ${state.dailyGoal}g CO₂`;
-
-            if (state.selectedPlantId) {
-                const plant = state.plants.find(p => p.id === state.selectedPlantId);
-                if (plant) {
-                    selectPlant(state.selectedPlantId);
-                }
-            }
-        }
-
-        function useResource(type) {
-            if (!state.selectedPlantId) {
-                notify('❌ Select a plant first!', 'error');
-                return;
-            }
-
-            const plant = state.plants.find(p => p.id === state.selectedPlantId);
-
-            if (type === 'water' && state.water > 0) {
-                if (plant.water < 100) {
-                    state.water--;
-                    plant.water = Math.min(plant.water + 25, 100);
-                    waterUsageCount++;
-                    updateHappiness(plant);
-                    notify('💧 Watered ' + plant.name);
-                    updateUI();
-                    
-                    // Check water master achievement
-                    if (waterUsageCount >= 10 && !achievements['water-master'].unlocked) {
-                        achievements['water-master'].unlocked = true;
-                        updateAchievements();
-                        notify('🏆 Achievement Unlocked: Water Master!');
-                    }
-                    
-                    saveGardenState();
-                } else {
-                    notify('💧 Plant is fully watered!', 'error');
-                }
-            } else if (type === 'sunlight' && state.sunlight > 0) {
-                if (plant.sunlight < 100) {
-                    state.sunlight--;
-                    plant.sunlight = Math.min(plant.sunlight + 25, 100);
-                    updateHappiness(plant);
-                    notify('🌤️ Gave sunlight to ' + plant.name);
-                    updateUI();
-                    saveGardenState();
-                } else {
-                    notify('🌤️ Plant has enough sunlight!', 'error');
-                }
-            } else {
-                notify('❌ Not enough resources!', 'error');
-            }
-
-            renderPlants();
-        }
-
-        function updateHappiness(plant) {
-            plant.happiness = Math.round((plant.water + plant.sunlight) / 2);
-
-            // Stage evolution
-            if (plant.happiness > 85 && plant.stage === 'Seedling') {
-                plant.stage = 'Young';
-                notify(`🌱 ${plant.name} grew to Young stage!`);
-            } else if (plant.happiness > 95 && plant.stage === 'Young') {
-                plant.stage = 'Mature';
-                notify(`🌸 ${plant.name} is now Mature!`);
+            // Update game state
+            if (window.state) {
+                window.state.coins = currentUser.earthCredits;
                 
-                // Check forest guardian achievement
-                const maturePlants = state.plants.filter(p => p.stage === 'Mature').length;
-                if (maturePlants >= 5 && !achievements['forest-guardian'].unlocked) {
-                    achievements['forest-guardian'].unlocked = true;
-                    updateAchievements();
-                    notify('🏆 Achievement Unlocked: Forest Guardian!');
-                }
-            }
-        }
-
-        function buyItem(type, qty, price) {
-            if (state.coins >= price) {
-                state.coins -= price;
-
+                // Add resources
                 if (type === 'water') {
-                    state.water += qty;
+                    window.state.water += qty;
                 } else if (type === 'sunlight') {
-                    state.sunlight += qty;
+                    window.state.sunlight += qty;
                 }
-
-                notify(`✅ Purchased ${qty}x ${type}`);
-                updateUI();
-                saveGardenState();
                 
-                // Check coin collector achievement
-                if (state.coins >= 1000 && !achievements['coin-collector'].unlocked) {
-                    achievements['coin-collector'].unlocked = true;
-                    updateAchievements();
-                    notify('🏆 Achievement Unlocked: Coin Collector!');
+                // Update UI
+                if (window.updateUI) {
+                    window.updateUI();
                 }
+                
+                // Save game
+                if (window.saveGame) {
+                    window.saveGame();
+                }
+            }
+            
+            // Update display
+            updateEarthCreditsDisplay(currentUser);
+            
+            // Show notification
+            if (window.notify) {
+                window.notify(`✓ Purchased ${qty}x ${type} for ${price} EarthCredits`);
             } else {
-                notify('❌ Not enough EarthCredits!', 'error');
+                alert(`✓ Purchased ${qty}x ${type} for ${price} EarthCredits`);
+            }
+            
+            // Refresh resources display
+            setTimeout(() => {
+                if (window.state) {
+                    document.getElementById('waterStorage').textContent = window.state.water;
+                    document.getElementById('sunInventory').textContent = window.state.sunlight;
+                }
+            }, 100);
+            
+        } else {
+            // Not enough EarthCredits
+            if (window.notify) {
+                window.notify('Not enough EarthCredits', 'error');
+            } else {
+                alert('Not enough EarthCredits');
             }
         }
-
-        function buyPlant(name, emoji, price, type) {
-            if (state.coins >= price) {
-                if (state.plants.length >= 6) {
-                    notify('❌ Garden is full! Maximum 6 plants allowed.', 'error');
-                    return;
-                }
-
-                state.coins -= price;
-
+    }
+    
+    // Global buyPlant function for plant store
+    window.buyPlant = function(name, emoji, price, type) {
+        const currentUserId = localStorage.getItem('currentUserId');
+        let users = JSON.parse(localStorage.getItem('users') || '{}');
+        let currentUser = users[currentUserId] || {};
+        
+        if (!currentUser.earthCredits && currentUser.earthCredits !== 0) {
+            currentUser.earthCredits = 0;
+        }
+        
+        // Check if garden is full
+        if (window.state && window.state.plants && window.state.plants.length >= 6) {
+            if (window.notify) {
+                window.notify('Garden is full! Remove a plant first.', 'error');
+            } else {
+                alert('Garden is full! Remove a plant first.');
+            }
+            return;
+        }
+        
+        if (currentUser.earthCredits >= price) {
+            // Deduct EarthCredits
+            currentUser.earthCredits -= price;
+            
+            // Update users
+            users[currentUserId] = currentUser;
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Update game state
+            if (window.state) {
+                window.state.coins = currentUser.earthCredits;
+                
+                // Add new plant
                 const newPlant = {
                     id: Date.now(),
                     name: name,
@@ -2084,270 +1107,225 @@
                     stage: 'Seedling',
                     water: 100,
                     sunlight: 100,
-                    happiness: 100
+                    happiness: 100,
+                    plantedAt: new Date().toISOString()
                 };
-
-                state.plants.push(newPlant);
-                notify(`🌱 Planted ${name}!`);
-                renderPlants();
-                updateUI();
-                saveGardenState();
                 
-                // Check first sprout achievement
-                if (state.plants.length === 1 && !achievements['first-sprout'].unlocked) {
-                    achievements['first-sprout'].unlocked = true;
-                    updateAchievements();
-                    notify('🏆 Achievement Unlocked: First Sprout!');
+                window.state.plants.push(newPlant);
+                
+                // Update UI
+                if (window.updateUI) {
+                    window.updateUI();
                 }
                 
-                // Check coin collector achievement
-                if (state.coins >= 1000 && !achievements['coin-collector'].unlocked) {
-                    achievements['coin-collector'].unlocked = true;
-                    updateAchievements();
-                    notify('🏆 Achievement Unlocked: Coin Collector!');
+                if (window.renderPlants) {
+                    window.renderPlants();
                 }
+                
+                // Auto-select new plant
+                if (window.selectPlant) {
+                    window.selectPlant(newPlant.id);
+                }
+                
+                // Save game
+                if (window.saveGame) {
+                    window.saveGame();
+                }
+            }
+            
+            // Update display
+            updateEarthCreditsDisplay(currentUser);
+            
+            // Show notification
+            if (window.notify) {
+                window.notify(`🌱 Planted ${name} for ${price} EarthCredits!`);
             } else {
-                notify('❌ Not enough EarthCredits!', 'error');
+                alert(`🌱 Planted ${name} for ${price} EarthCredits!`);
+            }
+            
+            // Check achievements
+            if (window.checkAchievements) {
+                setTimeout(window.checkAchievements, 100);
+            }
+            
+        } else {
+            // Not enough EarthCredits
+            if (window.notify) {
+                window.notify('Not enough EarthCredits', 'error');
+            } else {
+                alert('Not enough EarthCredits');
             }
         }
-
-        function notify(message, type = 'success') {
-            const notif = document.createElement('div');
-            notif.className = 'notification' + (type === 'error' ? ' error' : '');
-
-            const icon = type === 'error' ? '❌' : '🔔';
-            notif.innerHTML = `
-                <div class="notification-icon">${icon}</div>
-                <div class="notification-text">${message}</div>
-            `;
-
-            document.body.appendChild(notif);
-
-            setTimeout(() => {
-                notif.remove();
-            }, 3000);
-        }
-
-        // ==================== MODAL FUNCTIONS ====================
-        function openLeaderboard() {
-            const leaderboard = [
-                { name: 'EcoWarrior 🌍', carbon: 15420, isUser: false },
-                { name: 'GreenThumb 🌿', carbon: 12890, isUser: false },
-                { name: 'You 🌱', carbon: state.carbonSaved, isUser: true },
-                { name: 'PlantLover 🌸', carbon: 9560, isUser: false },
-                { name: 'NatureFan 🍃', carbon: 7340, isUser: false },
-                { name: 'EcoHero 💚', carbon: 6120, isUser: false }
-            ];
-
-            leaderboard.sort((a, b) => b.carbon - a.carbon);
-
-            const list = document.getElementById('leaderboardList');
-            list.innerHTML = leaderboard.map((entry, index) => {
-                const rankClass = index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : 'other';
-                const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
-
-                return `
-                    <div class="leaderboard-entry ${entry.isUser ? 'current-user' : ''}">
-                        <div class="rank-badge ${rankClass}">
-                            ${medal || '#' + (index + 1)}
-                        </div>
-                        <div class="player-info">
-                            <div class="player-name">${entry.name}</div>
-                            <div class="carbon-amount">${entry.carbon}g CO₂ saved</div>
-                        </div>
+    };
+    
+    // ==================== CARBON ACTIVITIES ====================
+    // Extend the carbon activities list
+    const CARBON_ACTIVITIES = [
+        { text: 'Walked instead of driving', amount: 50, category: 'transport', credits: 10 },
+        { text: 'Used public transport', amount: 60, category: 'transport', credits: 12 },
+        { text: 'Cycled to destination', amount: 70, category: 'transport', credits: 14 },
+        { text: 'Used reusable bag', amount: 30, category: 'waste', credits: 6 },
+        { text: 'Recycled materials', amount: 40, category: 'waste', credits: 8 },
+        { text: 'Composted organic waste', amount: 35, category: 'waste', credits: 7 },
+        { text: 'Avoided single-use plastic', amount: 25, category: 'waste', credits: 5 },
+        { text: 'Ate plant-based meal', amount: 80, category: 'food', credits: 16 },
+        { text: 'Chose local produce', amount: 45, category: 'food', credits: 9 },
+        { text: 'Reduced food waste', amount: 55, category: 'food', credits: 11 },
+        { text: 'Used renewable energy', amount: 70, category: 'energy', credits: 14 },
+        { text: 'Turned off unused lights', amount: 20, category: 'energy', credits: 4 },
+        { text: 'Unplugged devices', amount: 15, category: 'energy', credits: 3 },
+        { text: 'Air-dried laundry', amount: 40, category: 'energy', credits: 8 },
+        { text: 'Planted a tree', amount: 100, category: 'nature', credits: 20 },
+        { text: 'Used eco-friendly products', amount: 35, category: 'shopping', credits: 7 },
+        { text: 'Participated in clean-up', amount: 90, category: 'community', credits: 18 }
+    ];
+    
+    // Override openCarbonLog to show EarthCredits
+    window.openCarbonLog = function() {
+        const list = document.getElementById('activityList');
+        list.innerHTML = '';
+        
+        CARBON_ACTIVITIES.forEach(activity => {
+            const div = document.createElement('div');
+            div.className = 'activity-item';
+            div.onclick = () => logCarbonActivity(activity);
+            
+            div.innerHTML = `
+                <div style="flex: 1;">
+                    <span class="activity-text">${activity.text}</span>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+                        Saves ${activity.amount}g CO₂
                     </div>
-                `;
-            }).join('');
-
-            document.getElementById('leaderboardModal').classList.add('active');
-            
-            // Check top gardener achievement
-            if (leaderboard[0].isUser && !achievements['top-gardener'].unlocked) {
-                achievements['top-gardener'].unlocked = true;
-                updateAchievements();
-                notify('🏆 Achievement Unlocked: Top Gardener!');
-            }
-        }
-
-        function showSummary() {
-            const healthyPlants = state.plants.filter(p => p.happiness > 70).length;
-
-            const summaryData = [
-                { icon: '🌱', value: state.plants.length, label: 'Total Plants' },
-                { icon: '💖', value: healthyPlants, label: 'Healthy Plants' },
-                { icon: '♻️', value: state.carbonSaved + 'g', label: 'Carbon Saved' },
-                { icon: '🪙', value: state.coins, label: 'EarthCredits' },
-                { icon: '💧', value: state.water, label: 'Water Stock' },
-                { icon: '🌤️', value: state.sunlight, label: 'Sunlight Stock' }
-            ];
-
-            const grid = document.getElementById('summaryGrid');
-            grid.innerHTML = summaryData.map(item => `
-                <div class="summary-item">
-                    <div class="summary-icon">${item.icon}</div>
-                    <div class="summary-value">${item.value}</div>
-                    <div class="summary-label">${item.label}</div>
                 </div>
-            `).join('');
-
-            document.getElementById('summaryModal').classList.add('active');
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('active');
-        }
-
-        function openRenameModal(plantId) {
-            state.renamingPlantId = plantId;
-            const plant = state.plants.find(p => p.id === plantId);
+                <div style="text-align: right;">
+                    <span class="activity-amount">+${activity.amount}g</span>
+                    <div style="font-size: 0.75rem; color: var(--earthcoin-dark); margin-top: 4px; font-weight: 600;">
+                        +${activity.credits} 🪙
+                    </div>
+                </div>
+            `;
             
-            if (plant) {
-                document.getElementById('renameInput').value = plant.name;
-                document.getElementById('renameModal').classList.add('active');
-                
-                setTimeout(() => {
-                    document.getElementById('renameInput').focus();
-                    document.getElementById('renameInput').select();
-                }, 100);
+            list.appendChild(div);
+        });
+        
+        document.getElementById('carbonModal').classList.add('active');
+    };
+    
+    function logCarbonActivity(activity) {
+        const currentUserId = localStorage.getItem('currentUserId');
+        let users = JSON.parse(localStorage.getItem('users') || '{}');
+        let currentUser = users[currentUserId] || {};
+        
+        // Update game state if exists
+        if (window.state) {
+            // Add carbon saved
+            window.state.carbonSaved += activity.amount;
+            window.state.stats.totalCarbonSaved += activity.amount;
+            window.state.stats.activitiesLogged++;
+            
+            // Add EarthCredits to game
+            window.state.coins += activity.credits;
+            window.state.stats.totalCoinsEarned += activity.credits;
+            
+            // Update UI
+            if (window.updateUI) {
+                window.updateUI();
             }
-        }
-
-        function confirmRename() {
-            const newName = document.getElementById('renameInput').value.trim();
             
-            if (!newName) {
-                notify('❌ Please enter a name!', 'error');
-                return;
-            }
-            
-            const plant = state.plants.find(p => p.id === state.renamingPlantId);
-            
-            if (plant) {
-                const oldName = plant.name;
-                plant.name = newName;
-                notify(`✏️ Renamed ${oldName} to ${newName}`);
+            // Check daily goal
+            if (window.state.carbonSaved >= window.state.dailyGoal) {
+                const bonus = 100;
+                window.state.coins += bonus;
+                window.state.stats.totalCoinsEarned += bonus;
                 
-                if (state.selectedPlantId === plant.id) {
-                    document.getElementById('detailName').textContent = plant.name;
+                if (window.notify) {
+                    window.notify(`🎉 Daily goal completed! +${bonus} EarthCredits`);
                 }
                 
-                renderPlants();
-                saveGardenState();
+                window.state.carbonSaved = 0;
+                
+                if (window.updateUI) {
+                    window.updateUI();
+                }
             }
             
-            closeModal('renameModal');
-            state.renamingPlanId = null;
-        }
-
-        function openRemoveModal(plantId) {
-            state.removingPlantId = plantId;
-            const plant = state.plants.find(p => p.id === plantId);
-            
-            if (plant) {
-                document.getElementById('removePlantName').textContent = plant.name;
-                document.getElementById('removeModal').classList.add('active');
-            }
-        }
-
-        function confirmRemove() {
-            const plantIndex = state.plants.findIndex(p => p.id === state.removingPlantId);
-            
-            if (plantIndex !== -1) {
-                const plant = state.plants[plantIndex];
-                const plantName = plant.name;
-                
-                state.plants.splice(plantIndex, 1);
-                
-                if (state.selectedPlantId === state.removingPlantId) {
-                    state.selectedPlantId = null;
-                    document.getElementById('statGroup').style.display = 'none';
-                    document.getElementById('plantPreview').classList.remove('active');
-                    document.getElementById('detailIcon').innerHTML = '<span class="plus-icon">+</span>';
-                    document.getElementById('detailName').textContent = 'Select a Plant';
-                    document.getElementById('detailStage').textContent = 'No plant selected';
-                }
-                
-                notify(`🗑️ Removed ${plantName} from your garden`);
-                renderPlants();
-                saveGardenState();
+            // Save game
+            if (window.saveGame) {
+                window.saveGame();
             }
             
-            closeModal('removeModal');
-            state.removingPlantId = null;
+            // Check achievements
+            if (window.checkAchievements) {
+                window.checkAchievements();
+            }
         }
-
-        // ==================== ACHIEVEMENTS ====================
-        function updateAchievements() {
-            // Update achievement UI
-            Object.keys(achievements).forEach(achievementId => {
-                const achievement = achievements[achievementId];
-                const element = document.getElementById(`achievement-${achievementId}`);
-                
-                if (element) {
-                    if (achievement.unlocked) {
-                        element.classList.add('unlocked');
-                        element.classList.remove('locked');
-                    } else {
-                        element.classList.remove('unlocked');
-                        element.classList.add('locked');
-                    }
-                }
-            });
+        
+        // Update user's EarthCredits
+        if (!currentUser.earthCredits) currentUser.earthCredits = 0;
+        currentUser.earthCredits += activity.credits;
+        
+        // Update user's total carbon saved
+        if (!currentUser.totalKgSaved) currentUser.totalKgSaved = 0;
+        currentUser.totalKgSaved += (activity.amount / 1000); // Convert to kg
+        
+        // Save user
+        users[currentUserId] = currentUser;
+        localStorage.setItem('users', JSON.stringify(users));
+        
+        // Update display
+        updateEarthCreditsDisplay(currentUser);
+        
+        // Show notification
+        if (window.notify) {
+            window.notify(`♻️ ${activity.text} (+${activity.amount}g CO₂, +${activity.credits} EarthCredits 🪙)`);
+        } else {
+            alert(`♻️ ${activity.text} (+${activity.amount}g CO₂, +${activity.credits} EarthCredits 🪙)`);
         }
-
-        // ==================== GAME LOOPS ====================
-        function startGameLoops() {
-            // Decay plants every 30 seconds
-            setInterval(() => {
-                state.plants.forEach(plant => {
-                    plant.water = Math.max(plant.water - 5, 0);
-                    plant.sunlight = Math.max(plant.sunlight - 5, 0);
-                    updateHappiness(plant);
-                });
-                updateUI();
-                renderPlants();
-                saveGardenState();
-            }, 30000);
-
-            // Random carbon events every 45 seconds
-            setInterval(() => {
-                if (Math.random() > 0.6 && state.plants.length > 0) {
-                    const activity = carbonActivities[Math.floor(Math.random() * carbonActivities.length)];
-                    state.carbonSaved += activity.amount;
-
-                    notify(`♻️ ${activity.text} (+${activity.amount}g CO₂)`);
-
-                    // Check goal completion
-                    if (state.carbonSaved >= state.dailyGoal) {
-                        state.coins += 100;
-                        notify('🎉 Daily goal completed! +100 EarthCredits!');
-                        state.carbonSaved = 0;
-                        
-                        // Check coin collector achievement
-                        if (state.coins >= 1000 && !achievements['coin-collector'].unlocked) {
-                            achievements['coin-collector'].unlocked = true;
-                            updateAchievements();
-                            notify('🏆 Achievement Unlocked: Coin Collector!');
-                        }
-                    }
-                    
-                    // Check planet saver achievement
-                    if (state.carbonSaved >= 10000 && !achievements['planet-saver'].unlocked) {
-                        achievements['planet-saver'].unlocked = true;
-                        updateAchievements();
-                        notify('🏆 Achievement Unlocked: Planet Saver!');
-                    }
-
-                    updateUI();
-                    saveGardenState();
-                }
-            }, 45000);
+        
+        // Close modal
+        if (window.closeModal) {
+            window.closeModal('carbonModal');
+        } else {
+            document.getElementById('carbonModal').classList.remove('active');
+        }
+    }
+    
+    // ==================== PERIODIC SYNC ====================
+    // Sync EarthCredits every 3 seconds
+    setInterval(() => {
+        const currentUserId = localStorage.getItem('currentUserId');
+        if (currentUserId) {
+            let users = JSON.parse(localStorage.getItem('users') || '{}');
+            let currentUser = users[currentUserId] || {};
             
-            // Auto-refresh from dashboard every 60 seconds
-            setInterval(() => {
-                refreshFromDashboard();
-            }, 60000);
+            // Update display
+            updateEarthCreditsDisplay(currentUser);
+            
+            // Sync with game state
+            if (window.state && currentUser.earthCredits !== undefined) {
+                window.state.coins = currentUser.earthCredits;
+            }
         }
-    </script>
-</body>
+    }, 3000);
+    
+    // ==================== SETTINGS MODAL UPDATES ====================
+    // Override openSettings to show EarthCredits
+    const originalOpenSettings = window.openSettings;
+    window.openSettings = function() {
+        if (originalOpenSettings) {
+            originalOpenSettings();
+        }
+        
+        const currentUserId = localStorage.getItem('currentUserId');
+        let users = JSON.parse(localStorage.getItem('users') || '{}');
+        let currentUser = users[currentUserId] || {};
+        
+        // Update EarthCredits in settings
+        const settingsEarthCredits = document.getElementById('settingsEarthCredits');
+        if (settingsEarthCredits) {
+            settingsEarthCredits.textContent = currentUser.earthCredits || 0;
+        }
+    };
+</script>
+
 </html>
