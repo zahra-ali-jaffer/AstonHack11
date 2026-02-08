@@ -1718,7 +1718,6 @@
                     9: 'food'
                 };
                 
-                // Auto-select if not already selected
                 Object.entries(demoSelections).forEach(([questionNum, value]) => {
                     if (!userSelections[questionNum]) {
                         const option = document.querySelector(`[data-question="${questionNum}"][data-value="${value}"]`);
@@ -1731,4 +1730,5 @@
         });
     </script>
 </body>
+
 </html>
